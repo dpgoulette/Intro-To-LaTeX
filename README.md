@@ -11,9 +11,24 @@ Each directory/folder in this repository holds a different mini-book.  Each one 
 
 ### If you are completely new to LaTeX:
 Begin by reading IntroAndResources.pdf. (It is in the IntroAndResources folder of course.  And don't worry about the .tex file in that directory for now. Just read the .pdf.)  It will briefly explain what LaTeX is and give you some pointers to where you can get LaTeX and find information on how to install it etc.  If want a longer and better intro read:
+
 http://en.wikibooks.org/wiki/LaTeX/Introduction
+
 If you are installing on Windows or Mac, then my intro will probably be sufficient and point you in the right direction.  But if you are a Linux user then you will likely need more help than I give in the IntroAndResources document (but you should read it anyway).  For more detailed installation instructions for any platform, see:
+
 http://en.wikibooks.org/wiki/LaTeX/Installation
+
 Additional Linux installation info:
+
 https://www.tug.org/texlive/
 https://www.tug.org/texlive/quickinstall.html
+
+Once you get LaTeX installed, try opening and building the helloworld.tex document.  If you don't know how to build a .tex file, there are many resources online to teach you how to do it for your specific setup.
+
+### If you have LaTeX on your computer and have compiled a document at least once:
+
+Open the following files and check out what .tex code looks like (Don't worry if something looks confusing, you will learn it quickly.):  helloworld.tex and BasicExamples.tex.  Read my comments in those files.  I recommend you read .tex files in a text editor that shows line numbers.  
+
+Then move on to the main learning documents found in the IntroPart1 and IntroPart2.  Make sure to read the two parts in order.  Dowload and read the .tex file AND the .pdf side by side.
+
+
