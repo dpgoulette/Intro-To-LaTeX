@@ -1,0 +1,70 @@
+\documentclass{article}
+
+%this package creates paragraphs filled with dummy text.
+\usepackage{lipsum}
+
+%sets the 4 margin sizes.
+\usepackage[top=1in, bottom=1in, left=1.25in, right=1.75in]{geometry}
+
+\author{David Goulette}
+\date{\today}
+\title{Basic Examples}
+
+\begin{document}
+\maketitle
+\section{Enumerations and itemizations with default environments}
+Here is an enumerated list with nested items. 
+\begin{enumerate}
+\item The first
+\item The second
+\begin{enumerate}
+\item subitem one
+\item subitem two
+\begin{enumerate}
+\item subsubitem
+\end{enumerate}
+\item subitem three
+\end{enumerate}
+\item The third
+\end{enumerate}
+
+Here is an itemized list with nested items.
+
+\begin{itemize}
+\item The first
+\item The second
+\begin{itemize}
+\item subitem one
+\item subitem two
+\begin{itemize}
+\item subsubitem
+\begin{itemize}
+\item subsubsubitem
+\end{itemize}
+\end{itemize}
+\item subitem three
+\end{itemize}
+\item The third
+\end{itemize}
+
+\section{Center and flushright}
+\begin{center}
+This \texttt{text} is \textsc{centered}\\ in the\\ \textbf{middle}\\ of the\\ \textsl{page.}
+\end{center}
+
+\begin{flushright}
+This text\\is\\flushed to\\the\\right.
+\end{flushright}
+
+\subsection{A subsection with dummy text using the \texttt{lipsum} package.}
+\lipsum[1] %this prints the first paragraph of dummy text
+\subsubsection{This is a sub-subsection with dummy text}
+\lipsum[2] %this prints the second paragraph
+
+
+{\large \underline{\textbf{\texttt{This is a forced page break}}}}.
+\pagebreak
+
+\section{New section on a new page.}
+\lipsum[3-4]  %this prints the 3rd and 4th paragraph of dummy text
+\end{document}
