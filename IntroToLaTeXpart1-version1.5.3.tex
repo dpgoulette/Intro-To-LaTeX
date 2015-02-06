@@ -1,0 +1,2451 @@
+%   If this is the first LaTeX code you have ever read, then welcome to an awesome new world of typesetting!  Note that this first line started with a percent sign %.  In LaTeX, anything that follows a % sign has no effect on the final document.  The LaTeX compiler will completely ignore everything you are reading right now.  % is often used to leave comments in the file or to remove some code from the final document without deleting it all together (it is useful for debugging if you have an error). I have LOTS of comments in this file to explain some things to you.  Most of the comments are toward the beginning of this file in the preamble (I explain what the "preamble" is in the document itself and also in the comments below).  Notice that what you are reading right now is all on line number 1 in the code.  Your editor that you are reading this in is most likely wrapping this line so you can read it in your editing window.  But it is all on the same line of code.
+%O.k.! now, since I pressed <Enter> on my Windows laptop, we are on a new line in the .tex file!  But it is also a comment :-) so it won't affect the final document either. Line number 4 below is where the real code actually begins.
+%   But before you begin reading this any further, make sure you also have the .pdf that this file generates.  You MUST have this .tex file open along side the .pdf that it generates side-by-side in order to really learn from it.  Some of the things I do and say won't make sense if you are only looking at one or the other.  O.k. so if you have both files open side-by-side, lets get started!  Here is the first actual line of code in the document:
+\documentclass{article}
+%You must have \documentclass{'classname'} in the first non-commented line of your .tex file. This first line of code is essentially a declaration to LaTeX about what kind of document this is going to be. This document that you are reading is using the "article" class.  A class is basically a bunch of default settings that effect the global behavior throughout the entire document.  It affects the margins, pagination, title style, footnote style.... tons of things.  Once you know more about LaTeX you can go look up all the different things a particular class does automatically.  You can often override the default behavior of a class if you want to.
+
+%
+%There are many other classes to choose from other than "article," here are a few:
+%		\documentclass{letter}
+%		\documentclass{book}
+%		\documentclass{report}
+%		\documentclass{beamer}   <== for presentation slides
+%		\documentclass{proc}     <== for proceedings
+%
+%
+%	The first non-commented line (like line 4 above) will always follow the format:
+%			\documentclass["optional stuff"]{"class name"}
+%      Notice that in this document I have not added any optional arguments so this document will just have the default settings for the "article" class.
+%
+%There are many options to the article class that can be put in square brackets before the {article} like, if you replace line 4 with this:
+% \documentclass[12pt,landscape,twocolumn]{article}
+%    These options will create an article that has landscape paper orientation (instead of portrait which is the default), 12pt text (instead of the default 10pt), and two column (instead of the default one column). There are many other options.
+
+% 
+% The so called "preamble" is everything after \documentclass{article} but before \begin{document}.
+% Here is the basic layout of a document:
+%
+%\documentclass{classname}
+% **preamble**
+%\begin{document}
+% ***the main document***
+%\end{document}
+
+% The preamble is where you can include add-on packages that extend the functionality of LaTeX.  The preamble is also where you set global parameters for the document (like margin sizes, or the name of the author, or the page numbering style, etc.)
+%Some basic examples of all of these things are in this preamble.
+
+% important math packages from the American Mathematical Society
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+% This next package expands the number of integrals that are available and I like the way it styles the integral signs. This package must be loaded after the ams packages
+\usepackage{esint}
+
+% This is an expansion of amsmath that makes many math things look better.
+\usepackage{mathtools}
+
+% The next package is the "geometry" package which allows for easy margin management.  The geometry package is an example of a LaTeX function with optional inputs.  I happen to use 7 optional arguments in this next example. There are lots of LaTeX commands with optional inputs. The optional inputs are in [] before the {geometry} part. There are cases where the optional inputs can come after the {required stuff} part but you will learn that later.
+\usepackage[top=0.75in, bottom=1in, outer=2in, inner=0.75in, heightrounded, marginparwidth=1.25in, marginparsep=0.25in]{geometry}
+%"top" and "bottom" are just the top and bottom margin lengths.  All lengths in LaTeX can be in metric or English standard.  "outer" is the outer side of a page in a book if you were writing a book using \documentclass{book} (so outer is on the left or the right depending on whether it is an odd or even page). And "inner" is the opposite side.  But since we are using \documentclass{article}, the outer side is always on the right by default.  "marginparwidth" is the width of the margin that we can put text in with margin notes.  "marginsep" indicates the separation between the marginpar column and the main text column.
+
+
+% The following is a great package for putting text in the margin.  It is much better than the LaTeX command \marginpar{***}.  Marginnote can be used in text mode AND math mode and it has more functionality.  It puts the text in the "marginparwidth" mentioned above in the geometry settings.
+\usepackage{marginnote}
+
+%for colored text
+\usepackage{color}
+
+%This is a really cool package called hyperref that automatically makes your references in your document live links!  It makes urls live links as well.  And it automatically creates a table of contents when you view the pdf in pdf reader! Note that you won't see the table of contents when you preview your document in most text editors.  To see the table of contents you will likely have to open the .pdf in Adobe reader or some similar .pdf viewer.
+\usepackage[colorlinks=true,linkcolor=blue]{hyperref}
+
+
+
+%This is a small package that increases the available symbols.  I don't like the way it changes the look of integral signs so I add the "nointegrals" command which suppresses this effect.  I added this package so I can have a smiley face emoticon.  See if you can find it in the text.  :-)  
+\usepackage[nointegrals]{wasysym}
+
+%The following shows an example of setting parameters in the preamble.  These functions don't do anything to the final document on their own.  They just globally set what the author, date and title are.
+\author{David Goulette}
+\date{April, 23 2014} 
+% Instead of typing the date manually, you can do this:
+%\date{\today}
+% With the \today command, LaTeX will put in the date of the day you compile your document.  But each time you edit it an recompile on a new day, it will change it.
+\title{\LaTeX\ is Radical\vspace{1mm}\\  {\large A detailed introduction to the basics.\vspace{4pt}\\\textsl{Part 1}\vspace{2mm}\\\normalsize Version 1.5.3}}
+%Notice, within the \title function I forced a newline and changed the size so I could have a subtitle.  If this doesn't make sense to you, read the first few sections of the .pdf file where I explain new lines and text size changes.
+
+%We have finally reached the end of the preamble here.
+\begin{document} % The beginning of the main document.
+
+%This is the command that ACTUALLY makes the title using the variables I set in the preamble.
+\maketitle %<== This makes the title, author name and date
+
+
+%This is the abstract environment which does the formatting of an abstract for you.  I explain environments in section 4 below.  Notice the \begin{abstract} and the \end{abstract}, that is the beginning and the end of the "abstract" environment.  LaTeX will format everything in between in abstract style.
+\begin{abstract}
+This is where a brief summary of your paper would go.  You should write something that is direct and to the point so that an expert in the field could read it in about a minute and know exactly what the article covers and what the key results are.  When I say ``expert,'' I mean, say, a university professor with research level experience in the area.  Abstracts are often hard to fully understand if you are not an expert.  But this abstract that you are reading now is the worst ever! It has nothing to do with this document... o.k.  I mostly just threw this in to show you how to make an abstract in \LaTeX.  It uses the \texttt{abstract} environment, which does all of the formatting for you automatically!  By-the-way, if you don't know what an ``environment'' is, don't worry. I will explain what a \LaTeX\ environment is in section \ref{sec:environments}.  After you finish that section, come back and look at the code that created this abstract in the .tex file again.  It will make sense.
+\end{abstract}
+\tableofcontents %<== This makes the TOC right after the title.
+\newpage %<== This puts the first section on a new page.
+
+Notice that \LaTeX\ automatically indented this paragraph and it isn't in the abstract environment any more. That is the default behavior for normal paragraphs. But you will see below that the first line after a section heading is not indented.  That is just common style in technical articles so that is the default behavior when you choose \verb|\documentclass{article}|.  There are always ways to override these defaults if you really want to do that.
+
+\section{Before you start reading!}
+Let me tell you right from the start, that there are some \emph{fantastic} resources on the internet for learning \LaTeX.  For example, I can't hope to do better than the ``Not So Short Introduction to \LaTeXe'' by Tobias Oetiker,\\
+
+\url{http://tobi.oetiker.ch/lshort/lshort-letter.pdf}\\
+
+\noindent
+which is extremely well written and I highly recommend you read.  And my humble introduction to \LaTeX\ will never be as comprehensive as the wikibook,\\
+
+\url{http://en.wikibooks.org/wiki/Latex}\\
+
+\noindent
+which will be a fantastic resource for you once you know the basics.  But my introduction differs from others in one important way.  I have essentially written this as two parallel introductions to \LaTeX.  I have made available the .tex file AND the .pdf file that it generates so you can read them side-by-side.  In fact, if you don't have both, you will miss out on a lot of what I am doing here.  I have heavily commented the .tex file with explanations which you won't see in the final document.  And I have done some things in the .tex file that will look confusing until you see the final .pdf document and then it will make sense.  And I have done a few fancy things that you might have to look back and forth a few times to figure it out.  I feel the best way to learn \LaTeX\ (and any programming language for that matter) is to see good examples and start coding your own stuff as soon as possible.  So if you are currently reading the .pdf version of this right now and you don't have the .tex file that created this, stop right now and go get it!\footnote{If you are reading an old version of this and the link to my website is dead, then I may have moved on to a new place in life.  Just Google my name, throw in the word \texttt{LaTeX}, and see what happens.}\\
+%If you are reading the .tex file then you can see this comment. :-)  So you can just compile this .tex file and then you will have the .pdf
+
+
+\url{http://www.sjsu.edu/people/david.goulette/courses/latex/}\\
+
+\noindent
+Also double check that the version number of both files is the same (if not, re-download both of them).  I will update the version number if I make any changes.  I suggest you watch my first three video lessons on YouTube that explain what \LaTeX\ is, how compiling works and also what files are created.  So here goes!
+
+
+
+\section{The most basic \LaTeX\ document possible}
+Every \LaTeX\ document needs at least the following:
+\begin{verbatim}
+\documentclass{article}
+\begin{document}
+Hello World!
+\end{document}
+\end{verbatim}
+O.k... so you don't need ``Hello World!'' You can type whatever you want.  And also there are other choices other than \verb|article|.  The function \verb|\documentclass{article}| declares what type of a document it is. The pair of functions \verb|\begin{document}| and \verb|\end{document}| are the beginning and end of the document.  Now that you have the most basic document lets discuss what you can put in the document.
+
+\section{Basic stuff in normal text mode}
+\subsection{Comments on commenting}
+\label{sec:CommentsOnCommenting}
+If you read the \verb|.tex| file you will see many lines in the code that begin with a percent character, \verb|%|.  Any text you type in a \verb|.tex| file that comes after a \verb|%| will be ignored by \LaTeX.  For example, if you type this in your \verb|.tex| file:\\
+
+\verb|I made 10% more money this year.|\\
+
+\noindent
+then, when you compile your document, you will see this in the final output:
+
+I made 10% more money this year.
+\\  
+
+\noindent
+Note that the percent sign and everything after it were ignored by \LaTeX.\footnote{By-the-way, commenting lines can be very useful for debugging your code.  If you have a strange error when you compile and you are not sure what line is causing the problem, try commenting out various lines you suspect might be causing the problem and see if it compiles then.  This will help you narrow down your search for the error.} Of course there will be times when you want an actual percent sign in your final document! Don't worry, I will show you how to do this  in section~\ref{sec:SpecialCharactersAndSurprise} below.
+
+As I mentioned above, I have many comments in the \verb|.tex| file that you should read.  I especially have a lot towards the beginning of the \verb|.tex| file.  Don't skip over these comments because they are a part of the lesson here.  For example, I explain a lot about how to add packages in the \verb|.tex| file because it makes more sense to explain it there.  If you don't know what a package is don't worry.  I am going to explain what they are later in section~\ref{section:amsPackages}.  You will find, for example, that my discussion of packages that you see in the .pdf file is more basic and introductory in nature, but the comments in the \verb|.tex| file are more specific and detailed.  So read both.
+
+\subsection{Basic Spacing and Indentation}\label{sec:BasicSpacingAndIndentation}
+Notice that \LaTeX\ did not automatically indent this first line of the section.  That is a default behavior because this document is using the \texttt{article} class.  \LaTeX\ does a lot of automatic spacing like this (if you don't like the spacing \LaTeX\ does, don't worry, I will show you how to manually space things in just a minute).  Note also that \LaTeX\ is adjusting the spacing between words to make the text fit the column with publishing quality.  Long words like antidisestablishmentarianism, will be hyphenated for you if they don't fit the column.  If you don't like the automatic hyphenation you can override it and fix it.  Basically any ``automatic'' thing that \LaTeX\ does can be overridden if you want.\marginnote{\small \textsl{You should look at the \texttt{.tex} file to see what I mean with this. }}
+\LaTeX\ will      completely  ignore         multiple 
+spaces   and single  carriage returns %Extraneous comment for no reason.
+in    a .tex file.         So what you    are    reading   looks         
+completely normal in the     final    document         even
+ though 
+the \texttt{.tex} 
+file looks 
+pretty     messed      up.\\This is on a new line with no indent because I used \verb|\\| to end the line.\\Some\\words\\on\\new\\lines\\so\\you\\can\\see the result.\\
+Let me mention here that a line of code in your .tex file is not the same as a line in your resulting document.  And typing on a newline in your .tex file will not result in a newline in your document.  The command \verb|\\| gives you a new line in your \emph{document} but pressing \verb|<enter>| on a PC (or \verb|<return>| on a Mac) gives you a new line in your .tex file.  \emph{Big difference!}
+
+Two carriage returns gives you a new line that's indented. (``Carriage return'' means a new line in the .tex file, that is,  \verb|<enter><enter>|.)\\
+
+This is on a new line with a space and indented.\\
+
+\noindent Use \verb|\noindent| to force \LaTeX\ to not indent like this line.  Note that anything in your \texttt{.tex} file that starts with a \verb|\| will be interpreted as a command by \LaTeX.  So typing \verb|\noindent| in your \texttt{.tex} file is a command to \LaTeX\ that tells it not to indent the line that follows. 
+
+
+To force a page break use: \verb|\newpage|
+\newpage
+
+\subsection{Accents and quotation marks}
+\noindent
+There are lots of examples of accent marks.  Here are a few: San Jos\'{e} State, la for\^{e}t enchant\'{e}e, M\"{o}bius, and 
+Pe\~{n}a. Be sure to use \verb|{}| around the letter that you are accenting. For example, Hungarian has the letter o with a double acute accent over the top like this: \H{o}.  You get this accent mark over the o by typing \verb|\H{o}|.  So if you type, \verb|Paul Erd\H{o}s|, you will get: Paul Erd\H{o}s. If you leave out the \verb|{}| and only type \verb|Erd\Hos|, you will get an error because \LaTeX\ will be confused about how to interpret it; is the function \verb|\H|? or \verb|\Ho|? or \verb|\Hos|?  When you use \verb|{}| you make it clear where the name of the function ends and what the input to the function is (and \LaTeX\ likes that).
+
+If you want to use quotes you can't do \verb|"word"| because you will get:  "word"\\
+Note the wrong direction for the first quotation mark. Instead you need to do press the single quotes that point in the opposite direction like this: \verb|``word''|, to get this: ``word.''  Here is a case where you really have to look at the .tex file to see what I mean because it is hard to explain in words but easy to see in the code. \smiley
+
+\subsection{Text sizes and the scope of a command}
+Some commands in \LaTeX\ have the effect of changing the behavior of \LaTeX\ from that point forward.  If I use the \verb|\tiny| command, then all text after that command will be tiny.  This can cause errors because you might have other environments (or math) later on in the document that cannot be ``tiny.''  So you usually limit the scope of the command with \verb|{}|.\\
+If you type this in your .tex file:
+
+\verb|This is normal size, {\tiny this is tiny,} and now we are back to normal.|\\
+
+\noindent
+You get this:
+
+This is normal size, {\tiny this is tiny,} and now we are back to normal.\\
+Notice how the \{\} limited the scope of the command. Other sizes:\\
+{\tiny Alice}
+{\scriptsize Alice}
+{\footnotesize Alice}
+{\small Alice}
+{\normalsize Alice}
+{\large Alice}
+{\LARGE Alice}
+{\huge Alice}
+{\Huge Alice}\\
+{\tiny R}{\scriptsize e}{\footnotesize a}{\small l}{\normalsize l}{\large y} {\LARGE c}{\huge o}{\Huge o}{\Huge l}, {\huge r}{\LARGE i}{\large g}{\normalsize h}{\small t}{\footnotesize ?} {\scriptsize I think so}.
+\subsection{Special characters and surprising results}
+\label{sec:SpecialCharactersAndSurprise}
+The following characters are special in \LaTeX: \verb|# $ % ^ & _ { } \ ~|\\
+When I say ``special'' I mean that they are reserved for functions and commands. So \LaTeX\ interprets them as coding instructions. If you want these characters in your text you need to type the following commands: 
+\verb|\# \$ \% \^{} \& \_ \{ \} \textbackslash| to get \# \$ \% \^{} \& \_ \{ \}  \textbackslash\\
+Notice that \verb|\\| already means newline!, which was why we needed \verb|\textbackslash|.
+
+Now we can fix the example from section~\ref{sec:CommentsOnCommenting} above.  If you add the backslash before the \% sign we will get what we intended.  So if we type this in our .tex file:\\
+
+\noindent
+\verb|I made 10\% more money this year.|\\
+
+\noindent
+we will get this in the final document:\\
+
+\noindent
+I made 10\% more money this year.\\
+
+\noindent The \% is no longer interpreted as the beginning of a comment in the code so we get what we intended to get.
+
+Tilde is a complicated case because it can be done a few ways with different results: \~{} and \verb|~|, are two choices. (But how often do you want a floating tilde anyway?)
+
+Here is a fun example.  If you type \verb|<| or \verb|>| in your .tex file you will get < and > by default.
+\begin{center}
+>Cu\'{a}ndo es tu cumplea\~{n}os?... \emph{<Hoy es mi cumplea\~{n}os!} 
+\end{center}
+There are \emph{MUCH} better ways to handle characters from languages other than English using the \verb|babel| package, but this is a hack for some quick Spanish.  Note that \verb|<| and \verb|>| aren't really special function characters.  (Well,... they are not special when you are in text mode like we are now.)  But I am pointing out the fact that they don't create the output you might expect. (Later in section~\ref{sec:mathmode}, we will be discussing math mode where \verb|<| and \verb|>| will mean ``less than'' and ``greater than''... but that is only in math mode and we are not there yet.) When you are in normal text mode, if you want to get \textless\  and \textgreater\  you need to type the commands \verb|\textless| and \verb|\textgreater|.
+
+Finally if you type the \verb+|+ character in your code you will get a small horizontal line | like that.  And you can do a bunch of them in a row to create a line.  Like this:\\
+|||||||||\\
+This is useful for adding a horizontal dividing line.  (Obviously, David...)  I have some later in this document to divide up consecutive examples.
+
+\subsection{Script variations}\label{sec:scriptStyles}
+Let me start this short section by saying what this section is \emph{not} about.  This section is not about changing fonts.  The following examples are different script styles within one font family.  The word ``font'' in \LaTeX\ refers to the style of the text you are reading now, along with all the different styles seen below.  The default font in \LaTeX\ is called Computer Modern.  Other fonts are available. (It is a complicated topic to be left for another day.)  Here are the script variations available with the default Computer modern font:\\
+\textit{This is italic}\\
+\textrm{This is Roman script}\\
+\textsf{This is sans serif}\\
+\textsc{This is small capitals}\\
+\texttt{This is typewriter-like}\\
+\textsl{This is slanted (different that italic)}\\
+\underline{This is underlined}\\
+%O.k... technically underline is not a script style but I threw it in here because it makes sense to put it here!
+
+You can combine these script styles with sizing commands like, say, very large small caps:\\
+{\LARGE \textsc{Large small caps}}. (That seems contradictory! But it isn't. ``Large'' is the size of the script and ``small caps'' is the name of the script style.)
+
+And you can combine \emph{some} of the script styles like:\\
+\textbf{\underline{\emph{This is bold underlined italics!}}}
+% note the nesting of the functions and the three } at the end.
+
+But some won't combine.  You can't have italic small caps, for example.\\
+
+Let me emphasize that all of the script variations you see above are variations on the Computer Modern font.  We will see the math script style for Computer Modern below.
+
+The function \verb|\emph{}| has different behavior than \verb|\textit{}|.  \verb|\emph{}| is used to emphasize something and it changes regular font to italics or italics to regular font depending on what is the current style (\verb|\textit{}| just forces italics). Compare this:\marginnote{\small \textsl{Here is a case where you really need to look in the .tex file to fully understand this example.}}[4mm]\\
+
+I want to \emph{emphasize} this point.\\to this:
+
+\textit{I want to \emph{emphasize} this point.}\\
+
+If you want to type a short bit of text that comes out exactly like you type it including any special characters, then you use the function \verb+\verb|***|+.  In the verbatim environment, \LaTeX\ will ignore the meaning of special characters and just give you exactly what you type in a typewriter script.  I use this for typesetting a short block of computer programming code and I also use the verbatim function for my students when I am typing up instructions on how to use a calculator or learn \LaTeX !\footnote{For long sections of code I actually prefer to use the \texttt{verbatim} environment.  I will explain environments later in this document.}  Now, \verb+\verb+ is a unique function because the delimiters for the argument are not \verb|{}| in this case.  The reason is because, well... what if you also want the characters \verb|{| or \verb|}| in your verbatim text?... \LaTeX\ would get confused.  With \verb+\verb+, you can actually use any normal character as a delimiter.  I use the symbol \verb+|+ in general just because I like it.  That is, unless I want a \verb+|+ in my verbatim text (like the four I already have in this paragraph!) which means I would need to use + or something else. This is a case where examples are clearer than explanations.\\
+
+\noindent
+If you type this in your .tex file:\marginnote{\small \textsl{Here is a case where looking at the .tex file might actually be confusing at first!  But it would be a good exercise for you to figure out what I wanted and how I accomplished it.}}[5mm]
+\begin{center}
+\verb+\verb|\LaTeX\ is cool.\newpage \begin{document} $ % ^|+\\
+\end{center}
+Then you will get this in your document:
+\begin{center}
+\verb|\LaTeX\ is cool.\newpage \begin{document} $ % ^|
+\end{center}
+Notice that we got everything between the \verb+| |+ verbatim, and \LaTeX\ didn't try to interpret the special characters as commands.\\
+
+\noindent
+If you type: 
+\begin{center}
+\verb=\verb+ <> | } # \noindent+=\\
+\end{center}
+Then you will get: 
+\begin{center}
+\verb+ <> | } # \noindent+\\
+\end{center}
+Notice we got everything between the \verb|+ +| this time.  I had to switch to \verb|+| because I had a \verb+|+ in my text.
+
+Everything inside of \verb+\verb|stuff|+ has to be on the same line.  You will get errors if you press \verb|<enter>| in the middle of your verbatim text and try to compile it.
+
+\verb|\emph{Note that when you have a long verbatim line, then you have to split|\\ \verb|the line manually and force a new line in your document.  \LaTeX\ will not do|\\ \verb|any formatting with verbatim text. Notice how this will run right into the margin if I let it!!!}|\\
+
+Always remember that \LaTeX\ will do \emph{exactly} what it is told to do!  And sometimes that is not what you \emph{want} to happen.  So you have to fix it.
+
+\section{Environments}\label{sec:environments}
+Environments are basically anything that looks like this:
+\begin{verbatim}
+\begin{environment name}
+junk in the middle
+\end{environment name}
+\end{verbatim} 
+%The verbatim environment is better than \verb|**| for long passages.
+(There is actually one important exception to this that you will see below in math mode that I will show you in section~\ref{sec:HowToDisplayMath}.)  So this document itself is an environment because it starts with \verb|\begin{document}|
+ and ends with \verb|\end{document}|.  I used the \verb|verbatim| environment to make the example before this paragraph.  The \verb|verbatim| environment is an alternative to the \verb+\verb+ function I explained earlier but it has essentially the same results.  The abstract at the beginning of this document is an environment.  Here are just a few more useful examples (there are lots more than what I have here):
+\begin{center}
+This is the \verb|center| environment.
+\end{center}
+\begin{flushright}
+This is the\\ \verb|flushright|\\ environment.
+\end{flushright}
+Here is a long quote using the \verb|quote| environment.  It does the formatting for you!  This is from a really good book:
+\begin{quote}
+Alice was beginning to get very tired of sitting by her sister on the
+bank, and of having nothing to do: once or twice she had peeped into the
+book her sister was reading, but it had no pictures or conversations in
+it, `and what is the use of a book,' thought Alice, `without pictures or
+conversations?'
+
+So she was considering in her own mind (as well as she could, for the
+hot day made her feel very sleepy and stupid), whether the pleasure
+of making a daisy-chain would be worth the trouble of getting up and
+picking the daisies, when suddenly a White Rabbit with pink eyes ran
+close by her.
+\end{quote}
+\phantomsection\label{AliceDownTheHole}
+Don't you want to find out what happens to Alice next?\\
+I'll tell you this much, she {\Large fa}{\normalsize lls}
+\raisebox{0pt}[0pt][0pt]{\small
+do}\raisebox{-0.15ex}{w}\raisebox{-0.3ex}{n}
+\raisebox{-0.5ex}{{\small a}}
+\raisebox{-1.2ex}{{\scriptsize h}}\raisebox{-2.2ex}{{\footnotesize o}}\raisebox{-3.8ex}{{\scriptsize l}}\raisebox{-5ex}{{\scriptsize e.}}\vspace{-.5cm}\\
+O.k. that was me being silly.  I just want\hspace{4mm}ed to show you the quote environment.
+
+Here is an example of the \texttt{itemize} e\raisebox{-0.25ex}{n}\raisebox{-0.7ex}{v}\raisebox{-0.8ex}{i}\raisebox{-0.65ex}{r}\raisebox{-0.35ex}{o}\raisebox{-0.15ex}{n}ment nested inside of the \texttt{itemize} environment nested inside the \texttt{itemize} environment:
+
+\begin{itemize}
+\item Bread
+\item Cheese
+\item Fruit
+\begin{itemize}
+\item Oranges
+\item Apples
+\begin{itemize}
+\item Fuji
+\item Granny Smith
+\end{itemize}
+\item Kiwi
+\end{itemize}
+\item Coffee
+\end{itemize}
+%There are ways to change the default bullet point styles.
+As you can see it creates multi-level bullet points.  My example here is just the default itemized list.  There is a very cool package called \texttt{enumerate} that you can add on to your \LaTeX\ document which makes bullet point lists and enumerated lists very customizable.  But wait!..., now that I mention it, I realize that I just mentioned something called a ``package'' which I haven't explained to you yet!  So here goes.
+
+\section{Packages}\label{sec:packages}
+A package is an add-on to the standard \LaTeX.  New packages are added in the preamble to the document. The preamble is everything between \verb|\documentclass{classname}| and \verb|\begin{document}|\marginnote{\hspace{9mm}\textcolor{red}{$\Leftarrow$ Oops!}}.  So, when you look at a .tex file, this is where the preamble is:\\
+\begin{verbatim}
+\documentclass{book}
+**PREAMBLE STARTS HERE**
+     *
+     *
+     *
+**PREAMBLE ENDS HERE**
+\begin{document}
+Call me Ishmael.... etc.
+\end{verbatim}
+The preamble is the place where you set global parameters for the document (like title, author, and date), create new commands, set the options you want (like pagination style, header and footer style), etc. etc.
+
+ An example of a package that I have used in this document is the \verb|geometry| package, which makes changing the margins much simpler than with the standard \LaTeX\ methods.  The general syntax for adding a package is:
+\verb|\usepackage{package name goes here}| (See the preamble to the .tex file for my extensive commentary on packages.)\marginnote{\small{\textsl{Here is a margin note where you can put text! I set the} \texttt{marginpar} \textsl{width to be wider than normal in the preamble using the} \texttt{geometry} \textsl{package so that I had room for this.  See my comments in the preamble to the .tex for details.}}}  I have also added the \verb|marginnote| package which I really like for making notes in the margin (obviously). Margin notes can be useful when working on a single document with a group of people or when you are proofreading someone's paper and you want to make comments.  I am also using a \textcolor{red}{package} \textcolor{yellow}{that}  \textcolor{green}{lets} \textcolor{cyan}{me} \textcolor{blue}{use} \textcolor{magenta}{color} in this document as well.  See the comments in the preamble to this .tex document to read about the awesome package called \texttt{hyperref}.  It is the reason why all of the section references in this file are live links.  Also, if you click on a url in this document it should open up your favorite browser and take you straight to the web site.  And \texttt{hyperref} is also why you can see a table of contents on the left hand side of the window if you are using Adobe Reader or any similar viewer to read this .pdf file. %Of course you can't see the TOC if you are reading this right now. :-)
+If you are reading this document in the .pdf viewer included with your .tex editor, then you probably won't see the table of contents on the left.  So open this file up in Adobe Reader and check it out!
+
+The truth is that, \emph{technically}, many of the things that packages help you do are actually possible without the packages.  But the packages make things MUCH easier. There are thousands of packages that people have made.  Most are free.  If you are using MiXTeX in Windows, you have a package manager that will show you a list of possible packages and the ones you have installed.    You can probably find it under:\\
+ \verb|Start ==> All Programs ==> MiXTeX ==> Maintenance ==> Package Manager|\\
+ If you are on a Mac or using Linux, you are on your own.  \smiley\ 
+Oh yeah... one last thing here, if you add a package in your preamble that you don't have currently installed, NO PROBLEM! MiKTeX will install it for you on the fly when you compile.  So you don't actually have to use the package manager very often.
+
+\section{How to type basic math in \LaTeX}\label{sec:mathmode}
+
+The most impressive part of \LaTeX\ is on display when you create great looking mathematics and/or technical symbols.  This is an endless topic that I can only begin to explain here.  But it is important for you to know the most important basics of math mode.
+
+ There are two main modes in \LaTeX:  \underline{text mode} and \underline{math mode}.  Everything we have seen so far in this document has been in normal text mode.  When you are in text mode, \LaTeX\ interprets functions a certain specific way.  All of the functions and environments that I have mentioned or used up until now were for text mode.  Once you switch to math mode the game changes.
+ 
+ \subsection{In-line math mode vs. display math mode}
+ The first thing to know about math mode is that math mode itself has two modes! \emph{Sheesh!}  Don't worry it isn't that hard.  The two math modes are ``in-line math'' and ``display math.''  Sometimes you want a bit of math that goes right in the line. The equation $2x^2+3x-7=0$ shows a little bit of in-line math.  Or you might want $\sum_\alpha x_{\alpha},\ \forall \alpha\in \mathcal{I}$. Note that even though this is a little more complicated, this is still pretty readable in-line.  Also note that the script style changes a bit to look sort of ``mathey.''  This script style is different than any that were mentioned in section~\ref{sec:scriptStyles} above.  Good \LaTeX\ fonts blend the text with the math very nicely so they look different but not so different that it is jarring (like in Microsoft Word... \emph{Yuk}). But the limitation of in-line math is clear when you want bigger constructs that can get scrunched if you try to do them in-line.  Consider this: $\Phi(x,y)=\frac{x^2-y}{\int_\zeta^\omega f(x)dx}$.  That looks horrible and it is hard to read the letter zeta.  And notice that \LaTeX\ had to push this line down a bit to fit it in! In this case you should use display mode instead of in-line which makes the equation big and also centers it.  With display mode you get this:
+ \[
+ \Phi(x,y)=\frac{x^2-y}{\int_\zeta^\omega f(x)dx}.
+ \]
+ Or you might prefer the look of this:
+ \[
+ \Phi(x,y)=\frac{x^2-y}{\displaystyle \int_\zeta^\omega f(x)dx},\qquad 
+ \text{or maybe you prefer} \qquad 
+ \Phi(x,y)=\frac{x^2-y}{\left(\displaystyle \int_\zeta^\omega f(x)dx\right)}.\marginnote{\small{\textsl{There are many options and you are in control of the final appearance.}}}[-5mm]
+ \]
+   In the displayed versions you can actually read the Greek letter zeta as the lower limit of the integral.  So, in general, larger or longer equations should be done in display mode.  But you have the control so it is ultimately your choice.
+ 
+ \subsection{How to do in-line math}
+Doing in-line math is easy.  Just put your math between two dollar signs. So if you type \verb|$3x-5=y$| in your .tex file, then you will get $3x-5=y$ in your final document.  \LaTeX\ just switches to math mode when you type the first \verb|$|, and it switches back to text mode when you type  the second \verb|$|. Note that $3x-5=y$ does not look the same as 3x-5=y.  The first example used dollar signs and the second did not, so \LaTeX\ just stayed in text mode.  When you are mentioning mathematical variables in your text you should put them in dollar signs so they look like $x,\ y,\ $and $z$ instead of x, y, and z.  So make sure you do math in math mode so it looks like math and not text (and vice versa).  You will know when you mess up and do the opposite.  If you accidentally type text in math mode you will get $total garbage like this$.  In math mode, every character is considered to be a mathematical letter.  Therefore, \LaTeX\ will not put any space between letters even if you press space bar between them.  All spaces are completely ignored in math mode.
+
+Another new thing to learn is that when you are inside of math mode you have to use math commands to get what you want and these math commands \emph{only} work in math mode.  For example, to get an exponent you need to use the \verb|^| character. Typing \verb|$f(x)=x^2$| gives you $f(x)=x^2$.  From now on I won't always explicitly explain how to get every single mathematical symbol or construct.  Instead, I will show you a bunch of examples and if you want to learn how I did it, you need to look at the .tex file to see how!  Here are some in-line math examples.  Fractions like $\frac{2x}{z}$ or $2x/z$ are easy.  So are roots like $\sqrt{\Delta-y_1}$ or $\sqrt[3]{\varphi}$. Matrices like
+$
+\begin{bmatrix}
+a&b\\
+c&d
+\end{bmatrix}
+$
+are usually too big for in-line mode but you can do it and \LaTeX\ will adjust things.\footnote{To do this matrix I used the \texttt{amsmath} package which I explain below in section~\ref{sec:amsPackages}.  And by-the-way, if you want to know how to do a basic footnote like this one, it's easy! Just do \texttt{\textbackslash footnote\{and type whatever you want here\}}.  \LaTeX\ will stick the footnote reference right where you put the \texttt{\textbackslash footnote\{\}} and nicely format the footnote at the bottom of the page.} As we have seen, large fractions like $f(z)=\frac{az+b}{cz+d}$ don't look the best in in-line mode. But you can often rewrite them with parenthesis and you get $f(z)=(az+b)/(cz+d)$ which is fine if the equation is simple.
+
+\subsection{How to do display math}\label{sec:HowToDisplayMath}
+Display math has more options and possibilities.  To use display math you will always need some sort of an environment similar to how we did a bullet point list in section~\ref{sec:environments} above.  However, the difference is that the environments I'm about to use all send you into math mode instead of text mode.
+
+ In this section I will only show you the two basic options for display math.  They are also the most common.  First, if you want displayed equations that are \emph{not} numbered you enclose your math inside \verb|\[ \]|.  So if you type this:\marginnote{\small \textsl{Notice I do not use dollar signs in this example.  Dollar signs are only for in-line math.}}[3mm]
+\begin{verbatim}
+\[
+f'(x)=\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}
+\]
+\end{verbatim}
+you will get the displayed equation with no automatic numbering:
+\[
+f'(x)=\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}.
+\]
+Using \verb|\[ \]| to have displayed equations is an example of an environment that doesn't use \verb|\begin{}| and \verb|\end{}|.  Now, a word of warning: you will see old .tex files that will display unnumbered equations with double dollar signs \verb|$$ $$| instead of \verb|\[ \]|.  This practice is out of date and not advised.  It is a relic of old versions of \TeX\, and I have read that it will sometimes cause errors with recent packages.  So just don't do it.  But in case you see it in other people's work, you will know why.  
+
+If you want \LaTeX\ to number the equation for you, just use this instead:
+\begin{verbatim}
+\begin{equation}
+f'(x)=\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}
+\end{equation}
+\end{verbatim}
+and you will get the same thing we got before but numbered so you can reference it later:
+\begin{equation}
+f'(x)=\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}.
+\end{equation}
+
+\subsection{How to do display style math in-line}
+There are times when you will actually need to do display style math but you will want it in-line.  This is a very simple topic to learn but it is probably something that you won't need very much when you are just doing basic stuff.  However, when you start to use \LaTeX\ more you will need this occasionally.  I thought I would put this section here for the sake of completeness and you can refer back to it when you need it someday.  I have used it at least a dozen times in this document already.  To force display math when you are doing in-line math all you need is the command \verb|\displaystyle| inside of the \texttt{\$ \$}. This function overrides the in-line math behavior that shrinks your math.  Here is an example of what you type in your code followed by the result:\\
+
+\verb|Compare $\frac{ax+b}{cx+d}$ to $\displaystyle \frac{ax+b}{cx+d}$|\\
+
+Compare $\frac{ax+b}{cx+d}$ to $\displaystyle \frac{ax+b}{cx+d}$\\
+
+\noindent
+The problem with normal display math environments is that they usually do a lot of formatting and sometimes you don't want that. They often force the equation to be centered on the page and they sometimes add extra spacing above and below the equation as well. Sometimes you want display math style but you want it in a very particular spot.  It comes up a lot when you are formatting a table where some regular text needs to be lined up with some display math side by side.  See for example the table that I made on page \pageref{tableexample}.  The second row of that table has display math that is lined up with regular text.  Using the \verb|\displaystyle| command is the easiest way to handle that situation. Let's have an example in this section. Let's say you are really into electromagnetism and you want a sentence like this:\\
+
+My favorite equation in the whole world is: 
+$\quad \displaystyle 
+\oiint_{\partial \Omega}\mathrm{\mathbf{E}\cdot d\mathbf{S}}
+=
+\frac{1}{\varepsilon_{0}}\iiint_{\Omega}\rho\,\mathrm{d}V$\\
+
+Clearly you want the equation to be placed right after the colon in this situation.  And if that really was your favorite equation, it would be a shame to make it small.  The \verb|\displaystyle| function is just what you need here.  
+
+Just in case that is your favorite equation and you want to see the code for that last example, here it is but try not to be intimidated by it if it looks confusing.  This example requires the AMS packages to be included in the preamble which I will explain in section~\ref{sec:amsPackages} and you also need the \texttt{esint} package to get the cool double integral. I also use math bold, math roman, and some symbols which I will explain later in section~\ref{sec:issueswithcommonmathsymbols} as well as a spacing command that I will explain in section~\ref{sec:AdvancedSpacing}.  But here it is anyway:
+\begin{verbatim}
+$\displaystyle 
+\oiint_{\partial \Omega}\mathrm{\mathbf{E}\cdot d\mathbf{S}}
+=
+\frac{1}{\varepsilon_{0}}\iiint_{\Omega}\rho\, \mathrm{d}V$
+\end{verbatim}
+
+In case you are wondering, my favorite equation is: $e^{i\pi}+1=0$.\marginnote{\footnotesize \textsl{The 5 most important numbers in all of mathematics are contained in this one truly amazing equation.}} Mind. Blown. (How is it possible that a transcendental number, $e$, can be raised to the power of another transcendental number, $\pi$, multiplied by the complex imaginary unit, $i$, and somehow that equals the integer -1! I know proofs of this equation... but still...) This beautiful equation happens to look just fine in normal in-line mode. \smiley
+\subsection{A.M.S. packages}\label{sec:amsPackages}
+Before I go on to show you a bunch of math examples I have to mention the American Mathematical Society packages.  These are important expansions of the basic \LaTeX\ math capability.  They add many symbols, constructs, and environments that are not available with basic \LaTeX.  The in-line matrix I made earlier used the \verb|bmatrix| environment from the \texttt{amsmath} package. See the preamble to the .tex file for more information.  Many of the examples below require these extra packages.
+
+\subsection{The \texttt{align} environment}
+One environment I use a lot is \texttt{align} and this is a good place for me to teach you the use of the ampersand character \&.  We use \& to align things.  The ampersand is used in both text mode environments and math mode environments.  If you use \verb|\begin{align}| then it will number every line in the output like this silly example:
+
+\begin{verbatim}
+\begin{align}
+ax+b &= \mu-\theta\\
+&\leq \eta+42\\
+&< \epsilon.
+\end{align}
+\end{verbatim}
+which gives you
+\begin{align}
+ax+b &= \mu-\theta\\
+&\leq \eta+42\\
+&< \epsilon.
+\end{align}
+You need to use the \verb|\\| command to get each line of math on a new line.  But more importantly, notice the use of \verb|&| in the code for this example and the results. \LaTeX\ will align the lines based on where I placed the \verb|&|, so I chose to put them just to the left of $=,\ \leq$, and $<$ so they line up perfectly.  I have found that putting them to the left of the relation symbols works well.
+
+I often use align more like the following example where I am showing steps and I don't want to number everything.  To get the unnumbered version of most environments just add a star (a.k.a. asterisk) to the command like this:
+
+\begin{verbatim}
+\begin{align*}
+\frac{d}{dx}(x^2+2x+1)^2 &= 2\cdot(x^2+2x+1)\cdot(2x+2)\\
+&= (2x^2+4x+2)\cdot(2x+2)\\
+&= 4x^3+8x^2+4x+4x^2+8x+4\\
+&= 4x^3+12x^2+12x+4.
+\end{align*}
+\end{verbatim}
+And you will get this:
+\begin{align*}
+\frac{d}{dx}(x^2+2x+1)^2 &= 2\cdot(x^2+2x+1)\cdot(2x+2)\\
+&= (2x^2+4x+2)\cdot(2x+2)\\
+&= 4x^3+8x^2+4x+4x^2+8x+4\\
+&= 4x^3+12x^2+12x+4.
+\end{align*}
+Here is one last example:
+\begin{align*}
+2(x+4) &= 4x-2\\
+2x+8 &= 4x-2\\
+10&=2x\\
+5&=x.
+\end{align*}
+
+\subsection{Common math mistakes and how to avoid them}
+There are many little mistakes that are easy to make when you are first learning \LaTeX.  This section discusses a few common ones. First, make sure to group things with \{\} whenever necessary. It is common to make mistakes with exponents and subscripts in this regard.  For example, if you type\\
+
+\verb|$x^23+y_12+z_a^2$|\qquad you will get\qquad   $x^23+y_12+z_a^2$.\\ 
+ 
+\noindent
+You have to put \{\} around your exponents and subscripts if they are longer than one character.  So if you type\\
+ 
+\verb|$x^{23}+y_{12}+z_a^2$|\qquad then you will get\qquad $x^{23}+y_{12}+z_a^2$.\\
+  
+\noindent
+Notice that I don't need the brackets around the subscript and superscript on $z$ because they are only one character long.  It turns out that if you want a subscript that is, say, a Greek letter, then you don't need to use brackets even though the command for a Greek letter is more than one character long.  \LaTeX\ treats the \verb|\alpha| in the next example as one object:\\
+
+\verb|$F_\alpha$|\qquad will give you this:\qquad $F_\alpha$\\
+
+\noindent But I recommend you get in the habit of using brackets like this:\\
+
+\verb|$F_{\alpha}$|\qquad which will still give you this:\qquad $F_{\alpha}$\\
+
+\noindent This ``good habit'' will help you avoid errors in other circumstances.
+
+Using brackets is also important when a \LaTeX\ function has an alternate subscript-superscript behavior.  For example, the \verb|\sum| function will give you an alternate behavior when you do subscripts and superscripts.  This is because we tend to write the indices of a summation directly above and below the summation symbol.  But the syntax is the same as the examples in the previous paragraph.  So if you type
+\begin{verbatim}
+\[
+\sum_{i=0}^n i=\frac{n(n+1)}{2}
+\]
+\end{verbatim}
+you get\marginnote{\small{\textsl{Notice how important it is that I put \{\} around the $i=0$ in the code so that all three characters went below the summation sign.}}}[-1.5cm]
+\[
+\sum_{i=0}^n i=\frac{n(n+1)}{2}.
+\]\\
+
+\noindent
+Compare to the behavior here:\\
+
+\verb|$F_{i=0}^n$|\qquad which gives you this:\qquad $F_{i=0}^n$\\
+
+\begin{samepage}
+\noindent Examples of other symbols with behavior similar to \verb|\sum|:\\ 
+\verb|\int_a^b   \int\limits_a^b   \bigcup_a^b   \bigcap_a^b|\\
+\verb|\prod_a^b   \coprod_a^b   \bigsqcup_a^b   \bigoplus_a^b   \bigotimes_a^b|
+\[
+\int_a^b\qquad \int\limits_{a}^{b}\qquad \bigcup_a^b\qquad \bigcap_a^b\qquad \prod_a^b\qquad \coprod_a^b\qquad \bigsqcup_a^b\qquad  \bigoplus_a^b\qquad \bigotimes_a^b
+\]
+\end{samepage}
+By-the-way, note that \verb|\sum| and \verb|\Sigma| are not the same thing!  Sure, they are the same capital Greek letter, but the first will look and behave differently than the second because the first one is a \LaTeX\ math command and the second one is a math text symbol (which I will explain in more detail in section~\ref{sec:issueswithcommonmathsymbols}).  Here we have \verb|\sum_i^n| on the left and \verb|\Sigma_i^n| on the right.
+\[
+\sum_i^n \neq \Sigma_i^n
+\]
+
+\LaTeX\ has many already built-in functions to make the most common math constructs.  You have already seen some but I want to emphasize here what can happen when you don't use them.  For example, if you type this\\
+
+\verb|$sin(x)=tan^{-1}(x)$|\qquad then you will get\qquad $sin(x)=tan^{-1}(x)$,\\
+
+\noindent
+which looks bad because \LaTeX\ writes the letters in $sin$ and $tan$ like they are variables.  You see, \LaTeX\ doesn't know that you \emph{want} the sine and tangent function.  It just knows that you are in math mode and you typed some letters.  So it treats $sin$ and $tan$ like variables that are being multiplied.  Instead you want to use the built in functions for sine, \verb|\sin|, and tangent, \verb|\tan|.  These functions make the letters in Roman (as they should be) in order to differentiate them from variables.  Also these built in functions tend to space things better.  So if you type this\\
+
+\verb|$\sin(x)=\tan^{-1}(x)$|\qquad then you will get\qquad $\sin(x)=\tan^{-1}(x)$,\\
+
+\noindent which looks correct.  All of the trig and inverse trig functions have corresponding \LaTeX\ functions, as well as log, mod, max, min, and many other common constructs.  Make sure you use the built in math commands that are available in \LaTeX.
+
+\subsection{Miscellaneous Math Examples}
+This is just stuff I am throwing in for no specific reason at all except to show you some examples of what you can do in math mode.  Even though this section of the document is titled ``How to type basic math in \LaTeX,'' many of the examples that follow are a little more advanced than ``basic.''  Note that there are a few things I have below that I have not explicitly explained (especially more advanced spacing) but they are explained later in this document.  I am just showing you some things so you can see some of what \LaTeX\ can do.  Hopefully it will motivate you to learn more!  
+
+One fun example is that there is actually a solution to a problem that I mentioned earlier.  The problem was that matrices like 
+$
+\begin{bmatrix}
+a & b\\ c & d
+\end{bmatrix}
+$
+do not very look good in-line because they are so big and for \LaTeX\ to squeeze it in between as best it can.  There is actually an environment called \texttt{smallmatrix} that will allow you to make a matrix that looks better in-line like this: $\big[\begin{smallmatrix}
+a & b\\
+c & d
+\end{smallmatrix}\big]$.  It doesn't look too bad and if you are really trying to save space then this is your best option that I know of.
+\subsubsection{Unexplained Math Examples}
+\begin{equation*}
+f(x,y)=\int_{\alpha}^{\beta} \frac{x^2+\sin{y}}{\ln{x}}dxdy+ \sum_{i=0}^{n} \sqrt{x^{2i}+y} 
+\end{equation*}
+%note that \begin{equation*} is the same as \[\]
+
+\[
+f: X\xrightarrow[T]{\text{injective}}Y
+\]
+
+\begin{equation*}
+\int_a^b f(x) dx = F(a)-F(b)
+\end{equation*}
+
+For, $x\in A$ and $y_1\in B$, $\delta\pm\sqrt{x^2-y_1}=\log_2(\phi)$.
+
+\[
+\begin{bmatrix}
+a & b\\
+c & d\\
+\end{bmatrix}
+\nless \aleph_0
+\]
+
+\[
+(x+y)^n = \sum_{i=0}^{n}\binom{n}{i}x^i y^{n-i}
+\]
+
+\[
+\frac{\partial}{\partial y}\left[ x^2\cos(y)\right] = -x^2\sin(y)
+\]
+%The \left[ and \right] must be paired together.  The \left[ \right] functions mean that latex will adjust the height of the brackets to fit the stuff that it is enclosing.
+
+\[
+\left(\frac{2x}{z}\right)\cdot\left(\frac{5z}{2w}\right)\approx 2.73\times 10^{-5}
+\]
+\[
+12 \equiv 2 \pmod{5}
+\]
+You can have the limits of integration on the right side of the integral sign like this:
+\[
+\int_0^{\pi}\!\int_0^{2\pi}\!\int_0^1\rho^2\sin(\phi)\, d\rho\,d\theta\,d\phi =\frac{4}{3}\pi r^3
+\]
+%  \! makes a bit of negative space to pull the integral signs together a bit and the \, adds a bit of space to separate out the differentials
+Or you can have the limits above and below the integral sign like this:
+\[
+\int\limits_{0}^{2\pi}\int\limits_{\pi/6}^{\pi}g(\theta,\phi)\,\mathrm{d\theta\,d\phi}\marginnote{$\leftarrow$\footnotesize \textsl{Some people prefer to have the differential operators in roman like this instead of slanted math style.}}
+\]
+\[
+\iiint f(x,y,z)\,dx\,dy\,dz
+\]
+
+
+\[
+\idotsint\displaylimits_{n} f(y_1,y_2,\ldots,y_n)\,dV
+\]\\
+
+\[
+\begin{pmatrix}
+a_{11}& a_{12} & \cdots & a_{1n}\\
+a_{21}& \ddots &        & \vdots \\
+\vdots&        & \ddots & \vdots\\
+a_{n1}& \cdots & \cdots & a_{nn}
+\end{pmatrix}\cdot
+\begin{pmatrix}
+x_1\vspace{1mm}\\x_2\\\vdots\vspace{1mm}\\x_n
+\end{pmatrix}
+=
+\begin{pmatrix}
+\sum_{i=1}^{n}a_{1i}\, x_i\vspace{2mm}\\
+\sum_{i=1}^{n}a_{2i}\, x_i\\
+\vdots\\
+\sum_{i=1}^{n}a_{ni}\, x_i
+\end{pmatrix}
+\]\\
+
+\begin{equation}
+\label{eqn:cases}
+P_{r-j}=
+\begin{cases}
+0& \text{if $r-j$ is odd},\\
+r!\,(-1)^{(r-j)/2}& \text{if $r-j$ is even}.
+\end{cases}
+\end{equation}\\
+
+\[
+\cfrac{1}{\sqrt{2}+
+\cfrac{1}{\sqrt{2}+
+\cfrac{1}{\sqrt{2}+\dotsb
+}}}
+\]\\
+
+\[
+\sum_{\substack{
+0\le i\le m\\
+0\le j\le n}}
+\phantom{}_n C_m
+\]\\
+
+$A=\{x+iy\in\mathbb{C}\,:\,x\in\mathbb{Z}\ \text{and}\ y \geq 0\}$\\
+
+\begin{equation*}
+\parbox{1.2in}{Cool equations from complex analysis.}\quad\left\{\begin{aligned}
+e^{i\theta}&=\cos(\theta)+i\sin(\theta)\\
+f(a)&=\frac{1}{2\pi i}\oint_{\gamma}\frac{f(z)}{z-a}dz\quad
+\end{aligned}
+\right.
+\qquad 
+\end{equation*}\\
+
+\[
+d|n := \text{``$d$ is a divisor of $n$''}
+\]
+
+\[
+\left\{
+\parbox{.85in}{All true\\
+mathematical\\
+statements.}
+\right\}
+\subsetneq\left\{
+\parbox{1in}{The set of all\\
+interesting true\\
+statements.}
+\right\}
+\]
+\\
+
+\noindent
+|||||||||||
+
+Let's solve $x^2+5x+4=0$ by factoring.
+\begin{align*}
+x^2+5x+4 &= 0\\
+(x+4)(x+1)&=0
+\end{align*}
+which clearly implies that either
+\begin{alignat*}{5}
+x+4&=0	& &\qquad & &\text{or} &\qquad && x+1&=0,\\
+\intertext{so}
+x  &=-4 & &		  & &\text{and}&       && x  &=-1
+\end{alignat*}
+are solutions.\\
+
+\noindent
+||||||||||
+
+\noindent
+For the chemistry fans, here are some isotopes:\\
+
+\[{}^{14}_{\phantom{1}6}\mathrm{C}\quad {}^{238}_{\phantom{2}92}\mathrm{U}\quad {}^{16}_{\phantom{1}8}\mathrm{O}^{2-}\]
+
+\newpage
+
+\subsection{Issues with common math symbols, scripts, and math variations.}\label{sec:issueswithcommonmathsymbols}
+As we saw earlier in section~\ref{sec:scriptStyles}, there are a variety of script styles available when you are in text mode.  But it turns out that \verb|\underline{}| is the only one of those that \emph{also} works in math mode.  The rest will not work in math mode...  well, I should say, it \emph{might work} but it probably will not have the effect that you expect.  I should clarify what I mean with some examples. 
+
+If I type,\\
+
+ \verb|$2x + \mu- \underline{3y^2 -\sqrt{\zeta} + \int_a^b f(x)dx}$|\\
+
+\noindent
+then I get,\\
+
+ $2x + \mu- \underline{3y^2 -\sqrt{\zeta} + \int_a^b f(x)dx}$\\
+ 
+ \noindent
+ So notice that I was able to use  \verb|underline{}| inside of math mode and I got what I expected: underlined math.  But watch what happens when you try to make some bold math with the \verb|\textbf{}| function inside of math mode.  Typing this:\\
+ 
+  \verb|$2x^2 -z + \textbf{3x - 5y} + z^3$|\\
+ 
+ \noindent
+ will give me,\\
+ 
+  $2x^2 -z + \textbf{3x - 5y} + z^3.$\\
+  
+  \noindent
+Technically it compiled... so it ``worked,'' but notice what happened.  Everything I put inside of   \verb|\textbf{}|  was converted to text mode.  So I didn't get bold math as I had hoped.  I got bold text surrounded by regular math.  When you type  \verb|\textbf{}|, \LaTeX\ will go back to text mode after the \verb|{|, but then switch back to math mode after the \verb|}|.  This means that you will get compilation errors if you try to put this in your document:\\
+
+\verb|$2x^3 + \textbf{x^2} -7$|\\
+
+\noindent
+You will get errors because we have \verb|x^2| inside of the \verb|textbf{}| command.  The exponent command is only allowed in math mode but \LaTeX\ is in text mode. If you want math bold you have to use the command \verb|\mathbf{**}| but unfortunately there are limitations on which characters and symbols can be bolded with basic \LaTeX.  Notice that the pi in the following example isn't bolded.  Neither are the $+$ or $-$ operators.  Also notice that the bolded math is upright instead of slanted.\\
+
+$\mathbf{2x^2 + \pi-\Sigma = f(x)}$\\
+
+\noindent
+Because of the limitations of \verb|\mathbf{}|, the AMS packages added \verb|\boldsymbol{}| and \verb|\pmb{}| to \emph{somewhat} correct for these deficiencies (but they have limitations too).  You will have to experiment with each version of bold to see if you like it.  Here is an example that I borrowed directly from the AMS documentation\footnote{Here is the AMS-\LaTeX\ website: \url{http://www.ams.org/publications/authors/tex/amslatex}\\ Here is the direct link to the short guide:
+\url{ftp://ftp.ams.org/pub/tex/doc/amsmath/short-math-guide.pdf}}. to show the differences:\\
+
+$A_\infty + \pi A_0
+\sim \mathbf{A}_{\boldsymbol{\infty}} \boldsymbol{+}
+\boldsymbol{\pi} \mathbf{A}_{\boldsymbol{0}}
+\sim\pmb{A}_{\pmb{\infty}} \pmb{+}\pmb{\pi} \pmb{A}_{\pmb{0}}$\\
+
+
+You have likely noticed that I have used Greek letters many times in this document.  And, if you are reading along in the .tex file (as you should be!) you might have noticed that I have only used Greek inside of math mode.  It turns out that you can't use the basic Greek letters in text mode.\footnote{If you want to actually type text in Greek, Hebrew, Cyrillic, Hangul, or some other script type, you have to use an add-on package like \texttt{babel} to do the job.  There are packages supporting all the major non-English types of script.} With standard \LaTeX, Greek letters are treated as mathematical symbols only.  So if you type \verb|\delta| in text mode, you will get an error.  Thus, if you do want a $\delta$elta or a piece of $\pi$ie in the middle of your text, then you need to put it inside \verb|$ $|.  But keep in mind that \LaTeX\ is treating these Greek characters as \emph{math} and not text. 
+
+So the main lesson to learn in this section is that there are some things that only work in text mode, some things that only work in math mode, and some things that work in both. If you are not sure what will work, then give it a try and see what happens! 
+\subsection{Examples of some basic math script styles and symbols}
+I will not even try to show you the hundreds and hundreds of symbols that are available for math.  Instead visit my website where I will refer you to sources that can help you find the symbols you want.\footnote{\url{http://www.sjsu.edu/people/david.goulette/courses/latex/}}  But I will show you the basic script types that are available in math mode as well as a few extremely common math symbols.\footnote{By-the-way, you should look at the .tex file to see how I align the math text examples here. Also, read my comments right before the example for an explanation of the syntax.  I used the \texttt{tabular} environment and I used the \texttt{\&} character to line up things just like I did with the align environment earlier.} Let me emphasize that the scripts you see in this section are all \emph{in math mode} and not normal text.  Some of them look similar to what we saw in section~\ref{sec:scriptStyles} but everything in that section was for normal text.  \\
+
+% The tabular environment allows you to line up text in text mode.  But you can do math within the tabular environment (like I do below) so it is very flexible.  The second argument to tabular in this case has {l l} which means that there will be two columns (since there are two letters) and both columns will be left justified.  The lines will be lined up with the & character.
+% If I had done \begin{tabular}{l c r} then I would have three columns that are left justified, centered, and right justified respectively.
+
+% 
+\begin{tabular}{l l}
+Capital Greek\marginnote{\scriptsize \textsl{Many capital Greek letters are the same as Roman letters (like} $A$ \textsl{or} $Z$\textsl{), so there is no \LaTeX\ version of these letters because they are not needed.}}: &$\Gamma 
+\Delta 
+\Lambda 
+\Phi 
+\Pi  
+\Psi  
+\Sigma 
+\Theta  
+\Upsilon 
+\Xi 
+\Omega$\\
+\\
+Small Greek:  &$\alpha 
+\beta 
+\gamma 
+\delta 
+\epsilon 
+\zeta 
+\eta 
+\theta 
+\iota 
+\kappa 
+\lambda 
+\mu 
+\nu 
+\xi 
+\pi 
+\rho 
+\sigma  
+\tau 
+\upsilon 
+\phi 
+\chi 
+\psi 
+\omega$\\
+\\
+Variations on basic Greek: &$\varepsilon 
+\vartheta 
+\varphi 
+\varpi 
+\varrho 
+\varDelta 
+\varTheta 
+\varLambda 
+\varXi 
+\varSigma 
+\varUpsilon 
+\varPhi 
+\varPsi 
+\varOmega$\\
+\\
+Math Calligraphy: &$\mathcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$\\
+\\
+Math Sans Serif: &$\mathsf{abcdefghijklmnopqrstuvwxyz}$\\
+
+& $\mathsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$\\
+\\
+Math Typewriter: &$\mathtt{abcdefghijklmnopqrstuvwxyz}$\\
+
+& $\mathtt{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$\\
+\\
+Math Blackboard: &$\mathbb{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$\\
+\\
+Math Fraktur: &$\mathfrak{abcdefghijklmnopqrstuvwxyz}$\\
+
+& $\mathfrak{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$\\
+\\
+A sample of common stuff: &$\emptyset 
+\varnothing 
+\infty 
+\times
+\leq 
+\geq 
+\neq 
+\approx 
+\equiv 
+\sim 
+\simeq 
+\pm 
+\partial 
+\perp 
+\cup 
+\cap 
+\subset 
+\supset 
+\subseteq 
+\supseteq 
+\smallsetminus 
+\to 
+\nabla 
+\neg 
+\forall 
+\exists 
+\in$\marginnote{$\leftarrow$\scriptsize \textsl{The first two symbols in this line are two different versions of the empty set that are available.  Please note that it \emph{is not} the Greek letter phi. The empty set is a stylized version of the letter \O{} from the Norwegian alphabet...  I'm sorry... that is a pet peeve of mine.}}\\
+\\
+If elliptic functions are & \\
+your thing, then you need: &$\wp$\\
+\\
+And a bit of Hebrew & \\
+for the set theorists: &$\aleph$\\
+\\
+Here are some extra symbols & \\
+you might use occasionally. & $\ast
+\cdot
+\div
+\ldots
+\bullet
+\cdots
+\ltimes
+\rtimes
+\otimes
+\oplus
+\odot
+\dagger
+\therefore
+\blacksquare
+\square
+\Diamond
+\diamondsuit
+\heartsuit
+\sharp
+\flat
+\natural
+\blacklozenge 
+\spadesuit 
+\clubsuit
+\checkmark
+\S
+\nearrow
+\searrow
+\nwarrow
+\swarrow
+$
+\end{tabular}
+\vspace{5mm}
+
+With these letters and symbols available in math mode, it makes it easier to have a nice variety of symbols in your text.  This is especially helpful when you are typesetting more advanced mathematics that has a lot of variables.  The variety makes your document much more readable.  And many of these have become relatively standard for certain sets, constants,  and variables, like:  $\mathbb{R}$, $\mathbb{R}^n$, $\mathbb{C}$, $\mathbb{Z}$, $\mathbb{Q}$, $\mathrm{GL}(n,\mathbb{R})$, $\pi$, $\aleph_\circ$, and $\wp$.  Some things are context dependent but common like: $x,\ y$ and $z$ for real variables, $z,\ w,\ \zeta,$ and $\omega$ for complex variables, $\theta,\ \phi$, and $\rho$ for spherical coordinates, the list goes on and on.
+
+\section{More advanced spacing in both math and text mode}
+\label{sec:AdvancedSpacing}
+(From this section on, it would be better to completely read in the .pdf document first, especially if you are more of a beginner. Then, after you are done, you can read the .tex file if you are interested in how I did something that I didn't explain.  From here on out I have far fewer comments in the .tex file and I show the code for most of the examples in the .pdf document  The reason is that the level of complexity will increase slightly and I use more advanced things like tables that help align the examples nicely.  Many of these examples are hard to read in the .tex file when you are new to the game. Eventually you should learn how to do things like make a table though!\footnote{Making tables in latex really isn't very hard to do but it is a big topic with a lot of options and details.  Once you learn the \texttt{align} environment and how to make matrices below, you will have the requisite knowledge to take on tables no problem.  A matrix really is just a tiny table! If you are interested in learning how to use the \texttt{tabular} environment, (which is slightly more involved than what I am covering in this introduction) see\\ \url{http://en.wikibooks.org/wiki/LaTeX/Tables}})\\
+
+In section~\ref{sec:BasicSpacingAndIndentation} we covered some of the basics of spacing and indentation.  But sometimes you need more control over spacing in your document.  This can happen when you don't like a default \LaTeX\ behavior or when you are trying to do something outside the basics. Fortunately we have some more advanced commands at our disposal.  This section will not be exhaustive of all possibilities but it will give you all of the tools you will likely ever need in order to space things however you want.  Also, let me mention that all of the functions I introduce here work in both text mode \emph{and} math mode, but might not \emph{always} work in all situations... it depends on how you use it.  You will have to play with them and see what happens, and if one method gives you errors or doesn't work the way you want it to, there are other options you can try instead.  Off the top of my head I can't remember getting errors doing spacing... but it might happen... 
+
+A word of warning. This is the first section in this document where I am giving you the tools to manually override the behavior of \LaTeX\ at the local level.  It is true that packages add-on new behavior to \LaTeX\ but it is a global change.  And it is also true that environments change behavior locally, but in an environment, you are relying on the environment to do the changes for you; you are not manually forcing the changes at a low level.  In this section you are learning commands that override \LaTeX\ directly.  You are commanding \LaTeX\ to do very precise things.  So the results may look great or they may look terrible.  And it is also possible to give \LaTeX\phantom{} a spacing command that causes errors. So try to use these commands judiciously. It will take some practice to know when and how to use them.
+
+\subsection{Horizontal spacing}\label{sec:horizontal-spacing}
+First, let me remind you that in text mode, when you put spaces between letters in your .tex file, then \LaTeX\ will put \emph{one} space in between.  So if you type this in your .tex document:
+\begin{verbatim}
+aa a      a              a                       a
+\end{verbatim}
+the output will look like this:\\
+
+\noindent
+aa a      a              a                       a\\
+
+\noindent
+\LaTeX\ ignores all of the extra spaces after the first one in text mode.  But when you are in math mode, \LaTeX\ ignores \emph{all} of the spaces \emph{including} the first one.  So typing this:
+\begin{verbatim}
+$xx x      x              x                       x$
+\end{verbatim}
+will produce this:\\
+
+\noindent
+$xx x      x              x                       x$\\
+
+\noindent
+But what I didn't emphasize is that \LaTeX\ adjusts the spacing between letters and symbols based on what the letters or symbols are.  This is part of why \LaTeX\ looks so good.  It adjusts horizontal spacing to make the text look better depending on the context.
+\subsubsection{Basic fixed-length positive horizontal space}
+If you want to override the automatic horizontal spacing, then a basic way to do this is to use any one of the following seven \emph{horizontal} spacing commands:\\
+
+\verb|\,   \:   \;   \    \enspace   \quad   \qquad |\\
+
+\noindent
+The first three, \verb|\, \:| and \verb|\;|, create a small, medium, and large space that is fixed in length.  The fourth is a backslash character followed by a space which creates a ``control space'' that tends to be a little wider than \verb|\;| but might depend on your document settings (I'm not sure about this one...).  The command \verb|\enspace| \verb|\quad| and \verb|\qquad| create slightly larger spaces\footnote{The space created by \texttt{\textbackslash quad} is roughly the width of a capital M, \texttt{\textbackslash enspace} is half of a \texttt{\textbackslash quad} and \texttt{\textbackslash qquad} is a double \texttt{\textbackslash quad}.}.  All six of these work in both math mode and text mode. Here is an example with various spaces in text mode and mathmode along with the resulting output.  The first two letters in each line have no space between them for comparison.\footnote{Notice how the following example flowed over into the right hand margin.  This is an example of \LaTeX\ trying to do exactly what I told it to do.  I happen to be using the \texttt{tabular} environment here to line things up nicely and \LaTeX\ tries to keep this environment together in one block without word-wrapping.  This is an example of how you have far more power to force what you want with \LaTeX\ than you do with any other word processing software.  I happen to be o.k. with this example stretching past the main column into the right hand margin, but I am technically ``breaking the rules'' here.}\\ 
+
+\noindent
+\noindent\begin{tabular}{l l}
+\verb|aa\,a\:a\;a\ a\enspace a\quad a\qquad a|  &  
+aa\,a\:a\;a\ a\enspace a\quad a\qquad a\\
+\verb|mm\,m\:m\;m\ m\enspace m\quad m\qquad m|  &  
+mm\,m\:m\;m\ m\enspace m\quad m\qquad m\\
+\verb|MM\,M\:M\;M\ M\enspace M\quad M\qquad M|  &  
+MM\,M\:M\;M\ M\enspace M\quad M\qquad M\\
+\verb|$MM\,M\:M\;M\ M\enspace M\quad M\qquad M$|  &  
+$MM\,M\:M\;M\ M\enspace M\quad M\qquad M$\\
+\verb|$xx\,x\:x\;x\ x\enspace x\quad x\qquad x$|  &  
+$xx\,x\:x\;x\ x\enspace x\quad x\qquad x$\\
+\verb|$ii\,i\:i\;i\ i\enspace i\quad i\qquad i$|  &  
+$ii\,i\:i\;i\ i\enspace i\quad i\qquad i$\\
+\verb|$\Pi\Pi\,\Pi\:\Pi\;\Pi\ \Pi\enspace \Pi\quad \Pi\qquad \Pi$|  &  $\Pi\Pi\,\Pi\:\Pi\;\Pi\ \Pi\enspace \Pi\quad \Pi\qquad \Pi$\\
+\end{tabular}\\
+
+\noindent
+Note that the various lines of text in the results on the right-hand side have different lengths.  This is caused by the \emph{width of the letters I chose}, not the spacing. The space widths are in fact consistent in each line.  
+\subsubsection{Basic negative space}
+ The command \verb|\!| creates a negative space, meaning in reduces the default amount of space between letters or symbols. In fact, it can cause letters or symbols to be so squished together that they overlap slightly.  Here is an example in text mode and in math mode side-by-side followed by the result:\\
+ 
+ \noindent
+ \verb|xx\!x \quad $\Sigma\Sigma\!\Sigma$|\qquad$\Rightarrow$\qquad xx\!x\quad $\Sigma\Sigma\!\Sigma$\\
+ 
+ \noindent
+ Notice how the third $x$ and $\Sigma$ get scrunched up with the one before it. You will likely never use \verb|\!| the way I just did.  What I find it useful for is smashing together math symbols that you think are too spaced out by default.  The following example shows how I like to use negative space \emph{and} a little extra positive space to change the default spacing in an integral.  Actually I will use \emph{two} negative space commands back-to-back here because I want to double the horizontal ``squishing.''  Compare the following two examples where the first version is the default and the second is my adjusted version.  I show the code for both versions first then the results below.  Since I want to number these I will use the \texttt{equation} environment instead of \verb|\[ \]|.
+ 
+\begin{verbatim}
+\begin{equation}
+\int_{a}^{b}\int_{\alpha}^{\beta}f(r,\theta) dr d\theta
+\end{equation}
+
+\begin{equation}
+\int_{a}^{b}\!\!\int_{\alpha}^{\beta}\!f(r,\theta)\: drd\theta
+\end{equation}
+\end{verbatim}
+\begin{equation}
+\label{eqn:defaultDoubleIntegral}
+\int_{a}^{b}\int_{\alpha}^{\beta}f(r,\theta) dr d\theta
+\end{equation}
+\begin{equation}
+\label{eqn:adjustedDoubleIntegral}
+\int_{a}^{b}\!\!\int_{\alpha}^{\beta}\!f(r,\theta)\: drd\theta.
+\end{equation}
+In my opinion the default version, equation~\eqref{eqn:defaultDoubleIntegral}, has a little too much space between the two integral signs and a bit too much space between the second integral sign and the $f(r,\theta)$.  And I think there should be a little \emph{more} space between the $f(r,\theta)$ and the differential $drd\theta$. The second version, equation~\eqref{eqn:adjustedDoubleIntegral}, makes these adjustments with the \verb|\!| and \verb|\:| commands.  It is a subtle difference.  I like the second one better but you might not care either way.  This was just a simple example of how you might use negative space.\\
+\subsubsection{Choose your own width using \texttt{\textbackslash hspace\{\}}}
+If none of the previous options work for what you are trying to do, you always have the following option which is more powerful than all of the previous methods and works in both math mode and text mode: \verb|\hspace{}|.  This function creates your own user defined horizontal spacing with a variety of units. If you type \verb|\hspace{1in}| then you will add one inch of horizontal space like this:\\
+
+\verb|``Space,\hspace{1in}the final frontier...''|\\
+
+``Space,\hspace{1in}the final frontier...''\\
+
+There is one limitation to \verb|\hspace{}| though. It turns out that you cannot use \verb|\hspace{}| directly after a newline command (the reasons for this are technical and I don't fully understand them myself).  For this reason there is an alternate version of this command: \verb|\hspace*{}| You \emph{can} use \verb|\hspace*{}| right after a line break.  Here is an example where \verb|\hspace{}| doesn't work and you have to use the starred version instead.  The code is followed by the result:\\
+
+\begin{verbatim}
+\noindent
+Here is a non-indented line\\
+\hspace{4cm}This did not get shifted to the right.\\
+\hspace*{4cm}This \emph{did} get shifted to the right by four centimeters.
+\end{verbatim}
+
+\noindent
+Here is a non-indented line\\
+\hspace{4cm}This did not get shifted to the right.\\
+\hspace*{4cm}This \emph{did} get shifted to the right by four centimeters.\\
+
+You can also use negative values for the lengths to shift things to the left like we did above with \verb|\!|, but this allows you to shift as far to the left as you want. Here is a silly example of shifting a word to the left:\\
+\verb|\hspace*{15mm}Goulette\hspace{-2.4cm}David|\\
+\hspace*{15mm}Goulette\hspace{-2.4cm}David\\
+The first \verb|\hspace*| pushes my last name 2 cm to the right and then my first name ``comes next'' in the code but is shifted 2.4 cm to the left so it actually comes before my last name in the final document.  So you can type stuff right over other things which might be a fun effect in some instances.  If you type this in your code:\\
+
+\verb|This message\hspace{-2cm} is scrambled.|\\
+
+\noindent
+you will get this:\\
+
+This message\hspace{-2cm} is scrambled.\\
+
+There are six common units of length that people use in \LaTeX: \texttt{in, cm, mm, pt, ex,} and \texttt{em}.  The first three, inches, centimeters and millimeters, are self explanatory and I have already used them in the examples above. The unit \texttt{pt} is a ``point'' and is actually the standard unit of measurement in typography (think ``12 point font''). The unit \texttt{ex} is approximately the height of a letter x in the current font and size.  And the unit \texttt{em} is the width of an upper-case M.\footnote{There actually are more units than this. For more on this subject see: \url{http://en.wikibooks.org/wiki/LaTeX/Lengths}} Here are the six common units from shortest to longest:\\
+
+\begin{tabular}{l c l}
+\verb|A\hspace{1pt}A| & \quad &A\hspace{1pt}A\\
+\verb|A\hspace{1mm}A| & \quad &A\hspace{1mm}A\\
+\verb|A\hspace{1ex}A| & \quad &A\hspace{1ex}A\\
+\verb|A\hspace{1em}A| & \quad &A\hspace{1em}A\\
+\verb|A\hspace{1cm}A| & \quad &A\hspace{1cm}A\\
+\verb|A\hspace{1in}A| & \quad &A\hspace{1in}A
+\end{tabular}\\
+
+\noindent
+These units can be used in any \LaTeX\ function that takes a length as input (not just \verb|\hspace{}|). For example, the \texttt{marginnote} command, which I have used many times in this document, has an optional input that shifts the margin note up or down by whatever length you want.  There are lots of commands and environments that use lengths.
+
+\subsubsection{Flexible horizontal space with \texttt{\textbackslash hfill}}
+
+An occasionally useful function is the rubber band spacing command \verb|\hfill|.  This function fills in the space between text objects to fill the horizontal space of the column.  An example is best here.  Suppose you want three text blocks in a line that has a block that is left justified, one that is centered and one that is right justified on the same line. Then you can do this in your code to get that result:\\
+
+\noindent
+\verb|\noindent David Goulette \hfill Assignment 1 \hfill \today|\\
+
+\noindent David Goulette \hfill Assignment 1 \hfill \today\\
+
+\noindent
+So, if I were doing homework, this is an example of how I might put my name, title and date on one line.  The \verb|\hfill| function fills the space in the middle to make things balanced.  So you could do this:\\
+
+\noindent
+\verb|This\hfill is\hfill a simple\hfill example.|\\
+
+This\hfill is\hfill a simple\hfill example.\\
+
+\noindent
+Note that because I did not use \verb|\noindent| this time, the line is still indented. But since I used four text blocks with three \verb|\hfill| commands in between, the blocks are evenly spaced between the indent and the right margin.
+
+\subsubsection{The \texttt{\textbackslash phantom\{\}} function}
+I am introducing the \verb|\phantom{}| function as a method of creating horizontal space but it turns out that \verb|\phantom{}| has a lot of other uses. But let me first show you how to use it to create horizontal space. The \verb|\phantom{}| function creates invisible text that takes up the space of ``real'' letters but you can't see them in the final document!  Here is an example:\\
+
+\noindent
+\begin{tabular}{l l l}
+\verb|abcdefg|           &\qquad     &abcdefg\\
+\verb|ab\phantom{cde}fg| &\qquad     &ab\phantom{cde}fg
+\end{tabular}\\
+
+\noindent
+So the \verb|\phantom{cde}| created an ``invisible'' cde that takes up exactly the amount of space the letters cde would take up, but you can't see them in the final document.  So you can clearly use this as a method for creating horizontal space that matches a certain sequence of characters.
+
+\subsubsection{Examples of all types}
+The next two pages have a selection of horizontal spacing of various types shown vertically for easy comparison:
+\phantomsection
+\label{phantomsection}
+\vfill
+\begin{center}
+\marginnote{\footnotesize \textsl{$\leftarrow$Note that I centered this horizontally with the \emph{\texttt{center}} environment.  But I also centered it vertically in the remaining blank space on the page.  I did this using \emph{\texttt{\textbackslash vfill}}, which is a vertical fill that works just like \emph{\texttt{\textbackslash hfill}}. I will explain this later in section~\ref{sec:vfill} where we will discuss vertical spacing.}}\emph{This space is intentionally left blank...\\except, of course, for the fact that this stupid message\\ is in the space, which makes this a false statement.}
+\end{center}
+\vfill
+
+\pagebreak
+
+\noindent
+\underline{\textbf{Horizontal spacing examples in text mode}}\\
+
+\noindent
+\begin{tabular}{p{2.1in} p{3.65in}}
+\verb|xy|   & xy\\
+\verb|x\!y| & x\!y \\
+\verb|x\,y| & x\,y \\
+\verb|x\:y| & x\:y \\
+\verb|x\;y| & x\;y \\
+\verb|x\enspace y| & x\enspace y \\
+\verb|x\quad y| & x\quad y \\
+\verb|x\qquad y| & x\qquad y \\
+\verb|x\ y| & x\ y \\
+\verb|x\hspace{1pt}y| &  x\hspace{1pt}y\\
+\verb|x\hspace{1mm}y| &  x\hspace{1mm}y\\
+\verb|x\hspace{1ex}y| &  x\hspace{1ex}y\\
+\verb|x\hspace{1em}y| &  x\hspace{1em}y\\
+\verb|x\hspace{1cm}y| &  x\hspace{1cm}y\\
+\verb|x\hspace{1in}y| &  x\hspace{1in}y\\
+\verb|x\hspace{1.1in}y| &  x\hspace{1.in}y\\
+\verb|x\hspace{3.7cm}y| &  x\hspace{3.7cm}y\\
+\verb|x\hspace{37mm}y| &  x\hspace{37mm}y\\
+\verb|x\hspace{12pt}y| &  x\hspace{12pt}y\\
+\verb|x\hspace{7em}y| &  x\hspace{7em}y\\
+\verb|x\hspace{5.3ex}y| &  x\hspace{5.3ex}y\\
+\verb|x\hspace{-1pt}y| &  x\hspace{-1pt}y\\
+\verb|x\hspace{-2mm}y| &  x\hspace{-2mm}y\\
+\verb|x\hspace{-4mm}y| &  x\hspace{-4mm}y\\
+\verb|xabcdy|			& xabcdy\\
+\verb|x\phantom{abcd}y| &  x\phantom{abcd}y\\
+\verb|xINVISIBLEy|			& xINVISIBLEy\\
+\verb|x\phantom{INVISIBLE}y| &  x\phantom{INVISIBLE}y\\
+\verb|x\hfill y|				 &  x\hfill y\\
+\verb|x\hfill y\hfill z|		&  x\hfill y\hfill z\\
+\verb|w\hfill x\hfill y\hfill z|		&w\hfill  x\hfill y\hfill z\\
+\verb|A rose\hfill is a\hfill rose.| &A rose\hfill is a\hfill rose.\\
+\end{tabular}\\
+
+\newpage
+
+\textsl{Note that all of these are the same as in text mode. I only changed the last example.}\\
+
+\noindent
+\underline{\textbf{Horizontal spacing examples in math mode}}\\
+
+\noindent
+\begin{tabular}{p{2.1in} p{3.65in}}
+\verb|$xy$|   & $xy$\\
+\verb|$x\!y$| & $x\!y$ \\
+\verb|$x\,y$| & $x\,y$ \\
+\verb|$x\:y$| & $x\:y$ \\
+\verb|$x\;y$| & $x\;y$ \\
+\verb|$x\enspace y$| & $x\enspace y$ \\
+\verb|$x\quad y$| & $x\quad y$ \\
+\verb|$x\qquad y$| & $x\qquad y$ \\
+\verb|$x\ y$| & $x\ y$ \\
+\verb|$x\hspace{1pt}y$| &  $x\hspace{1pt}y$\\
+\verb|$x\hspace{1mm}y$| &  $x\hspace{1mm}y$\\
+\verb|$x\hspace{1ex}y$| &  $x\hspace{1ex}y$\\
+\verb|$x\hspace{1em}y$| &  $x\hspace{1em}y$\\
+\verb|$x\hspace{1cm}y$| &  $x\hspace{1cm}y$\\
+\verb|$x\hspace{1in}y$| &  $x\hspace{1in}y$\\
+\verb|$x\hspace{1.1in}y$| &  $x\hspace{1.in}y$\\
+\verb|$x\hspace{3.7cm}y$| &  $x\hspace{3.7cm}y$\\
+\verb|$x\hspace{37mm}y$| &  $x\hspace{37mm}y$\\
+\verb|$x\hspace{12pt}y$| &  $x\hspace{12pt}y$\\
+\verb|$x\hspace{7em}y$| &  $x\hspace{7em}y$\\
+\verb|$x\hspace{5.3ex}y$| &  $x\hspace{5.3ex}y$\\
+\verb|$x\hspace{-1pt}y$| &  $x\hspace{-1pt}y$\\
+\verb|$x\hspace{-2mm}y$| &  $x\hspace{-2mm}y$\\
+\verb|$x\hspace{-4mm}y$| &  $x\hspace{-4mm}y$\\
+\verb|$xabcdy$|			& $xabcdy$\\
+\verb|$x\phantom{abcd}y$| &  $x\phantom{abcd}y$\\
+\verb|$xINVISIBLEy$|			& $xINVISIBLEy$\\
+\verb|$x\phantom{INVISIBLE}y$| &  $x\phantom{INVISIBLE}y$\\
+\verb|$x\hfill y$|				 &  $x\hfill y$\\
+\verb|$x\hfill y\hfill z$|		&  $x\hfill y\hfill z$\\
+\verb|$w\hfill x\hfill y\hfill z$| & $w\hfill  x\hfill y\hfill z$\\
+\verb|$2x^2\hfill y_2\hfill \Psi$| & $2x^2\hfill y_2\hfill \Psi$\\
+\end{tabular}
+
+\pagebreak
+\subsection{Vertical Spacing}
+\label{sec:VerticalSpacing}
+You usually don't need to do vertical spacing quite as much as you do horizontal spacing so I will just give you some basics.  
+\subsubsection{Changing the global line spacing}
+First, if you want to globally change the vertical line spacing then you can use the \verb|\linespread{}| function to change the default line spacing.  You have to use this function in the preamble to your document (\textsl{i.e.} it has to go before \verb|\begin{document}|). If you put either of the following commands in your preamble it should change the global line spacing.
+\begin{verbatim}
+\linespread{1.3} % <== roughly one and a half line space
+\linespread{1.6} % <== roughly double space
+\end{verbatim}
+The default value is 1.  Play around with different values to see what you like. Another (and probably better) option you have for either global OR local line spacing changes is to use the \texttt{setspace} package.\footnote{For more details see: \url{http://en.wikibooks.org/wiki/LaTeX/Text_Formatting}}
+\subsubsection{Variable newline space with \textbackslash\textbackslash[\texttt{length}]}
+This is a simple and handy way to create a newline with a prescribed vertical space that follows the newline command.  Instead of typing \verb|\\| to get a regular new line, you can add an optional argument in square brackets like this \verb|\\[length]|.  The optional length will be the amount of space between the line the precedes the \verb|\\| and the line that follows. The effect of the optional \texttt{[length]} command local. It only effects the single newline command that it is attached to.  
+
+\begin{verbatim}
+\noindent
+This is on a line,\\
+and this is on the next line with the usual space.\\[1cm]
+But this is on a new line after 1 cm of space. Pretty simple, right?
+\end{verbatim}
+
+\noindent
+This is on a line,\\
+and this is on the next line with the usual space.\\[1cm]
+But this is on a new line after 1 cm of space. Pretty simple, right?\\
+
+\noindent||||||||||
+
+Basically, all of the measurement rules you learned regarding horizontal spacing in section~\ref{sec:horizontal-spacing} apply when you are doing vertical spacing except for one important thing: since this is a \emph{vertical} spacing command, positive lengths go in the \textit{downward} direction and negative lengths go in the \textit{upward} direction. So:\\
+
+\noindent
+\verb|This message \\[-4.2mm] is scrambled.|\\
+
+\noindent
+This message \\[-4.2mm] is scrambled.\\
+
+\noindent 
+The words ``is scrambled'' are on a new line but that new line is shifted \textit{upward} by 4.2 mm from where it would normally be, which puts it right over the top of the previous line.
+
+\subsubsection{\texttt{\textbackslash smallskip}, \texttt{\textbackslash medskip}, and \texttt{\textbackslash bigskip}}
+To force some vertical space between paragraphs you can use \verb|\smallskip|, \verb|\medskip|, or\\ \verb|\bigskip|. These commands need to be put in the right place and I don't completely understand why certain things work here and why some things don't but I will show you what works and what doesn't. Basically, the skip commands need to come between two paragraphs.  Remember that hitting the \verb|<enter>| key (or \verb|<return>| on a Mac) one time does not get you a new paragraph.  If you hit \verb|<enter>|\verb|<enter>| then you will get a new paragraph. Anyway, none of the following examples work correctly because the skip command is not between two paragraphs. I show each one followed by the result.\\
+
+\begin{verbatim}
+This\bigskip doesn't \medskip work.
+\end{verbatim}
+This\bigskip doesn't \medskip work.
+
+\begin{verbatim}
+This \bigskip 
+doesn't \medskip 
+work\smallskip
+either.
+\end{verbatim}
+This \bigskip 
+doesn't \medskip 
+work\smallskip
+either.\\
+The way to make sure that these work is to either have an empty line of code directly following the skip function, or place the skip function right before the \verb|\\| command, or you do both (each option will have a different result).  If you have a \verb|\\| preceding the empty line it will have the effect of adding an extra line \textit{and then also} tacking on the skip space.  The rules about indentation that we covered in section~\ref{sec:BasicSpacingAndIndentation} still apply.  Examples that work:
+
+\begin{verbatim}
+\noindent
+This does work! \bigskip
+
+This is indented after a big skip. \medskip
+
+This is indented after a medium skip!
+\end{verbatim}
+\noindent
+This does work! \bigskip
+
+This is indented after a big skip. \medskip
+
+This is indented after a medium skip!\\
+
+\noindent||||
+
+\begin{verbatim}
+\noindent
+This works too! \bigskip\\
+This is not indented after a big skip.\smallskip
+
+Indented after a small skip.
+\end{verbatim}
+\noindent
+This works too! \bigskip\\
+This is not indented after a big skip.\smallskip
+
+Indented after a small skip.\\
+
+\noindent||||
+
+\begin{verbatim}
+\noindent
+This is a different example. \smallskip\\
+
+Indented after a space and a small skip. \bigskip\\
+
+\noindent
+This is not indented after a space and a big skip.\\
+\end{verbatim}
+\noindent
+This is a different example. \smallskip\\
+
+Indented after a space and a small skip. \bigskip\\
+
+\noindent
+This is not indented after a space and a big skip.\\
+
+\noindent||||
+
+In this last example note that the \verb|\smallskip| made a small space and the \verb|\\| combined with \verb|<enter> <enter>| added an additional space.  The same thing happened with the \verb|\bigskip| but the skip is larger and I suppressed the indent manually.  Compare this last example with the earlier examples and you will see the differences.
+
+\subsubsection{\texttt{\textbackslash vspace\{\}} and \texttt{\textbackslash vspace*\{\}}}
+
+If you want to force some vertical space locally with variable height then your best option is to use the \verb|\vspace{}| function.  It basically works just like \verb|\hspace{}| except that now, positive lengths go downward and negative lengths go upward.  But the one issue with \verb|\vspace{}| is that you have to put it in the correct places to get it to work.  Just like with \verb|\smallskip|, \verb|\medskip|, and \verb|\bigskip|, you have to put \verb|\hspace{}| between paragraphs. Examples:\\
+
+\begin{verbatim}
+\noindent First sentence.\vspace{1in}
+
+Second sentence indented after 1 inch of space.
+\end{verbatim}
+\noindent First sentence.\vspace{1in}
+
+Second sentence indented after 1 inch of space.\\
+
+\noindent||||
+
+\begin{verbatim}
+\noindent First sentence.\vspace{1.3cm}\\
+Second sentence not indented after 1.3 cm of space.
+\end{verbatim}
+\noindent First sentence.\vspace{1.3cm}\\
+Second sentence not indented after 1.3 cm of space.
+
+\noindent||||
+
+\begin{verbatim}
+\noindent 
+First sentence.\vspace{-3mm}\\
+Second sentence shifted UP 3 mm.
+\end{verbatim}
+\noindent 
+First sentence.\vspace{-3mm}\\
+Second sentence shifted UP 3 mm.\\
+
+\noindent||||
+
+That last example shows how negative lengths shift the next line up in the negative vertical direction.
+
+One limitation to \verb|\vspace{}| is that it will not work if you use it directly after a \verb|\pagebreak|.  If you want vertical space at the beginning of a page you need to use \verb|\vspace*{}| instead, then it will work.\footnote{If you ever want to make nice multiple columns I suggest you use the \texttt{multicol} package.  This great package allows you to do a \texttt{\textbackslash columnbreak} to break to the next column (just like a page break).  In this case, if you want vertical spacing right after the \texttt{\textbackslash columnbreak} command, you need to use \texttt{\textbackslash vspace*\{\}}. For more on the \texttt{multicol} package see the official documentation here: \url{http://www.ctan.org/pkg/multicol}}. The vertical space it creates comes after the top margin, meaning the vertical space will be added to the length of the top margin.  Here some example code followed by the result:\\
+\begin{verbatim}
+This is on this page. 
+
+\pagebreak
+
+\vspace*{1in}
+This is on the next page, indented, after one inch of blank space below the top margin.
+\end{verbatim}
+This is on this page. 
+
+\vfill
+
+\phantom{Note how I used this invisible junk with the vfill.  It is pushing the footnotes to the bottom of the page.  They wouldn't be at the bottom of the page if it weren't for this... but who cares... I can't believe anybody will ever read this. EXCEPT YOU!}
+
+\pagebreak
+
+\vspace*{1in}
+This is on the next page, indented, after one inch of blank space below the top margin.
+
+\subsubsection{\texttt{\textbackslash vfill}}
+\label{sec:vfill}
+The command \verb|\vfill| works just like \verb|\hfill| but it does a rubber band spacing in the vertical direction.  Just like with \verb|\bigskip| and \verb|\vspace{}|, you have to be careful where you stick the \verb|\vfill| command.  I'm not really sure why but lines always seem to be indented after a \verb|\vfill|.  Anyway, I have two examples that show how I use it.  The first is a nice example of how to use \verb|\vfill| along with the \texttt{center} environment on page \pageref{phantomsection}.  Here is a more basic example where I have 3 lines of text that are spread out to fill the remaining space on this page.  The first line is at the top of the remaining space on this page, the third line is at the bottom, and the second line is right in the middle.  All indentation rules still apply.  The \verb|\newline| command at the end is required to make sure that the block of text that follows is pushed to the next page:
+
+\begin{verbatim}
+This is a line of text at the top of the remaining space.\\
+\vfill
+This indented line is half way between the previous line and the bottom of the page.\\
+\vfill
+\noindent
+This is not indented and is forced to the very bottom of the page.
+\newpage
+
+\end{verbatim}
+This is a line of text at the top of the remaining space.\\
+\vfill
+This indented line is half way between the previous line and the bottom of the page.\\
+\vfill
+\noindent
+This is not indented and is forced to the very bottom of the page.
+\newpage
+
+\section{More mathematics}
+Now we will return to cover a hodgepodge of mathematical topics.  Some are very important and are used all of the time.  Some only come up once in a while.  For example, section~\ref{sec:variableSizedGrouping} is extremely important for mathematics.  But section~\ref{sec:PhantomUses} covers more uses of the \verb|\phantom{}| function that might only come in handy occasionally.
+\subsection{Variable sized math grouping symbols}
+\label{sec:variableSizedGrouping}
+
+  There are many different types of mathematical grouping symbols such as parentheses or brackets.  The following are some examples where I show you on the left what to type in the .tex file and the output on the right.  These examples (like every example in this section) are done in math mode, so these would have to be inside \verb|$ $| for in-line math or inside a math environment for display math.  \marginnote{\footnotesize \textsl{The arrows here are meaningless except to say that what is on the left turns into what is on the right. I just used various arrows here to show you some variety.}}[4mm]
+\begin{center}
+\begin{tabular}{c c c}
+\verb+$(x)$ +	&$\rightsquigarrow$& $(x)$\\ 
+\verb+$\{x\}$ + &$\dashrightarrow$& $\{x\}$\\
+\verb+$[x]$ +   &$\Longrightarrow$& $[x]$\\
+\verb+$\langle x\rangle$+ &$\rightarrow$& $\langle x\rangle$\\
+\verb+$\|x\|$+ &$\longmapsto$& $\|x\|$\\
+\verb+$|x|$+ &$\hookrightarrow$& $|x|$
+\end{tabular}
+\end{center}
+
+Also there are some cases where an operator itself is as a pair of grouping symbols like the floor and ceiling functions.
+\[
+\quad 
+\]
+\begin{center}
+\begin{tabular}{c c c}
+\verb+$\lfloor x \rfloor$+	&$\rightarrowtail$& $\lfloor x \rfloor$\\ 
+\verb+$\lceil x \rceil$+ &$\twoheadrightarrow$& $\lceil x\rceil$
+\end{tabular}
+\end{center}
+Now, when you are doing most in-line math or display math that is not very tall, then these basic grouping symbols work just fine. So you can have something like $(
+2x+3)^2=\lfloor x/7\rfloor$ which looks great. Display math looks great in these basic situations as well:
+\[
+\|x\|^2 = (x_1)^2+(x_2)^2+\cdots+(x_n)^2 = \langle x,x\rangle.
+\]
+But suppose you want a large display fraction and you would like it to be in parentheses.  If you type this:
+\begin{verbatim}
+\begin{equation}
+(\frac{z^2}{\arccos(w)})^{2\pi i}
+\end{equation}
+\end{verbatim}
+then you will get this
+\begin{equation}
+(\frac{z^2}{\arccos(w)})^{2\pi i},\label{eqn:BadParentheses}
+\end{equation}
+which clearly doesn't look good.  We really want the outer parentheses surrounding the fraction to be larger.  Or, for another example, suppose you have a set containing various objects like this:\marginnote{$\leftarrow$\footnotesize \textsl{Note how I put lines of code on new lines and use a few spaces to indent the nested grouping symbols.  This is just to make the code more readable and easier to edit. Remember that \LaTeX\ ignores spaces in math mode so it comes out right.}}[6mm]
+\begin{verbatim}
+\begin{equation}
+S=\{
+    \{\Sigma,b\}, \{a,[x;y;z]\}, \mu,Z
+  \}
+\end{equation}
+\end{verbatim}
+which gives you this:
+\begin{equation}
+S=\{
+    \{\Sigma,b\}, \{a,[x;y;z]\}, \mu,Z
+  \}\label{eqn:BadSetBrackets}
+\end{equation}
+
+In truth, this example doesn't look too bad as it is. But it would be a little more readable (in my opinion) if we vary the size of the nested grouping symbols.  So let's learn how to do it.
+
+There are two basic options you have that will adjust the size of the grouping symbols in example equations \eqref{eqn:BadParentheses} and \eqref{eqn:BadSetBrackets} above.  It turns out that the first option works well to fix equation~\eqref{eqn:BadParentheses} and the second option is better for \eqref{eqn:BadSetBrackets}.
+\subsubsection{\texttt{\textbackslash left} and \texttt{\textbackslash right}}
+The first option is to let \LaTeX\ automatically adjust the size for you.  You do this by using the pair of functions \verb|\left| and \verb|\right|.  The \verb|\left| and \verb|\right| functions must directly precede the grouping symbol that you would like \LaTeX\ to resize for you, like this:
+\begin{verbatim}
+\left( ***junk in the middle*** \right)
+\end{verbatim}  
+Also, you must have a \verb|\left| paired with a \verb|\right|.  If you do a \verb|\left| without a matching \verb|\right| you will get errors.  With this new tool in hand we can fix the parentheses in equation~\eqref{eqn:BadParentheses} by adding \verb|\left| and \verb|\right|:\marginnote{\footnotesize \textsl{I switched to using}\\ \texttt{\textbackslash[ \textbackslash]} \textsl{here because I didn't want to number these equations like I did earlier with equation~\eqref{eqn:BadParentheses}.}}[6mm]
+\begin{verbatim}
+\[
+\left(\frac{z^2}{\arccos(w)}\right)^{2\pi i}
+\]
+\end{verbatim}
+Now it looks better:
+\[
+\left(\frac{z^2}{\arccos(w)}\right)^{2\pi i}.
+\]
+These\marginnote{\footnotesize \textsl{In my \TeX\, editor, when I view large math in the .pdf viewer, it doesn't look as good as when I view the document in Adobe Reader.  Sometimes the corners of root symbols don't quite line up, sometimes I see a few white dots in the middle of the large parenthesis, etc..  Don't worry.  When you view and print with Adobe Reader it will look great.}} functions are great when you have tall constructs inside of grouping symbols. Even if you really stack some massive things up, then \verb|\left| and \verb|\right| will stretch things to make it work:
+\[
+\left( 
+\frac{\displaystyle \oint\limits_{\alpha}^{\beta}g(z)dz}
+{\displaystyle \sum_{i=0}^{n}\varphi(n)}
+\right)
+\cdot
+\left(
+\frac{\displaystyle \prod\limits_{j=1}^{\infty}\Phi(a_j)}
+{\displaystyle \frac{d}{dx}\psi(x)\bigg|_{x=42}} 
+\right)^{p/q}
+=\nabla f(p_1,p_2,p_3).
+\]
+Here are some examples of grouping symbols that you can use with \verb|\left| and \verb|\right|:
+
+\begin{center}
+\begin{tabular}{c c c}
+\verb+\left[ \frac{x}{y} \right] +	&$\rightsquigarrow$&  $\displaystyle\left[\frac{x}{y} \right]$\vspace{5pt}\\ 
+
+\verb+\left\lbrace \frac{x}{y} \right\rbrace+ &$\dashrightarrow$&  $\displaystyle\left\lbrace \frac{x}{y} \right\rbrace$\vspace{5pt}\\ 
+
+\verb+\left\langle \frac{x}{y} \right\rangle +   &$\Longrightarrow$& $\displaystyle\left\langle \frac{x}{y} \right\rangle$\vspace{5pt}\\  
+ 
+\verb+ \left| \frac{x}{y} \right| + &$\rightarrow$&  
+$\displaystyle\left| \frac{x}{y} \right|$\vspace{5pt}\\
+
+\verb+ \left\| \frac{x}{y} \right\|  + &$\longmapsto$& $\displaystyle\left\| \frac{x}{y} \right\|$\vspace{5pt}\\
+
+\verb+ \left\lfloor \frac{x}{y} \right\rfloor  + &$\longmapsto$& $\displaystyle \left\lfloor \frac{x}{y} \right\rfloor$\vspace{5pt}\\
+
+\verb+ \left\lceil \frac{x}{y} \right\rceil  + &$\longmapsto$& $\displaystyle\left\lceil \frac{x}{y} \right\rceil$\vspace{5pt}
+
+\end{tabular}
+\end{center}
+
+For the sake of completeness, I will mention one more option you have with \verb|\left| and \verb|\right|.  You can use a period to suppress one of the \verb|\left| or \verb|\right| grouping symbols.  You just type \verb|\left.| or \verb|\right.| in place of one of the regular grouping symbols.  Remember, that you must pair a \verb|\left| and a \verb|\right|.  But one of the pairs can have a period causing it not to appear.  Since I can't think of an example that is simple and useful (sorry!), here is a contrived example to understand the syntax:\\
+
+\begin{verbatim}
+\[
+x_1+x_2+\cdots+x_n \Rightarrow
+\left\{\;
+\sum_{i=0}^n x_n
+\right.
+\]
+\end{verbatim}
+
+\[
+x_1+x_2+\cdots+x_n \Rightarrow
+\left\{\;
+\sum_{i=0}^n x_n
+\right.
+\]
+
+The reason I can't come up with a simple example is that many of the situations where you would use a singe bracket have better solutions than using this method.\footnote{A good example is the \texttt{cases} environment that is good for functions like the equation~\eqref{eqn:cases} on page \pageref{eqn:cases}.}  And the one place where I would use \verb|\left.| or \verb|\right.| unfortunately uses too many things that I haven't taught.  So I won't explicitly show the code here (you can see it in the .tex file of course!).  The \verb|\left.| or \verb|\right.| commands can be useful if you want a grouping symbol on only one side of some math with explanatory text on the other side.  This example is silly but this is useful in serious situations sometimes.
+
+\begin{equation*}
+\parbox{1.2in}{Cool equations from complex analysis.\marginnote{\footnotesize \textsl{This is not the only way to do this.  This example has a few things that are somewhat more advanced.}}[-8mm]}\Longrightarrow
+\left\{
+\begin{aligned}
+e^{i\theta}&=\cos(\theta)+i\sin(\theta)\\
+f(a)&=\frac{1}{2\pi i}\oint_{\gamma}\frac{f(z)}{z-a}dz\quad
+\end{aligned}
+\right.
+\qquad 
+\end{equation*}\\
+
+Now the great part about \verb|\left| and \verb|\right| is that \LaTeX\ does the resizing for you automatically.  But the bad part (sometimes) is that the automatic results might not look good.  And there are also cases where \verb|\left| and \verb|\right| won't change the default sizing at all (even when you are hoping it will).  But fortunately you have a second option whenever you don't like the automatic results.  Well, actually... you have four options. \textsl{And those options are...}
+
+\subsubsection{\texttt{\textbackslash big}, \texttt{\textbackslash Big}, \texttt{\textbackslash bigg},  and \texttt{\textbackslash Bigg}}
+You can manually force four different sizes of grouping symbols using the four functions found in the title of this sub-section.  These sizes are fixed and they do not adjust to what is inside of them.  \LaTeX\ won't adjust things to make the results so it is up to you to make the results look good (which is subjective...). By using these functions you are forcing things and overriding automatic \LaTeX\ behavior.  So you are in control.
+
+Here is an example comparing the default sizes to some forces sizes.  This:
+\begin{verbatim}
+\[
+(\frac{x^2}{17})^2  \: 
+\bigg(\frac{x^2}{17}\bigg)^2 \:
+\Bigg(\frac{x^2}{17}\Bigg)^2 \qquad
+\|\aleph\|\:
+\Big\|\aleph\Big\|\:
+\Bigg\|\aleph\Bigg\| \qquad
+[x^2] \:
+\big[x^2\big] \:
+\Big[x^2\Big]
+\]
+\end{verbatim}
+
+\noindent
+gives you this:
+\[
+(\frac{x^2}{17})^2  \: 
+\bigg(\frac{x^2}{17}\bigg)^2 \:
+\Bigg(\frac{x^2}{17}\Bigg)^2 \qquad
+\|\aleph\|\:
+\Big\|\aleph\Big\|\:
+\Bigg\|\aleph\Bigg\| \qquad
+[x^2] \:
+\big[x^2\big] \:
+\Big[x^2\Big]
+\]
+Just like with \verb|\left| and \verb|\right|, you have to put these functions directly before the grouping symbol that you want to resize manually.  But unlike \verb|\left| and \verb|\right| you \emph{do not} have to worry about matching left and right bracket.  So you could use these with a single unpaired grouping symbol if you want.
+
+Here are all the sizes side by side with the same curly bracket.  If you apply these sizes to left and right brackets, like this:
+\begin{verbatim}
+\Bigg\{ \bigg\{ \Big\{ \big\{ \{ \varnothing \} \big\} \Big\} \bigg\} \Bigg\}  
+\end{verbatim}
+then you will get something that resembles a Russian matryoshka doll with nothing inside:\marginnote{\footnotesize \textsl{This is an extremely empty set! Actually, this set is not empty at all... it is a set in a set in a set in a set in a set in a set which happens to  contain nothing.}}[4mm]
+\[
+\Bigg\{ \bigg\{ \Big\{ \big\{ \{ \varnothing  \} \big\} \Big\} \bigg\} \Bigg\}   
+\]
+But let me emphasize again that you will get these sizes no matter what.  \LaTeX\ isn't doing any automatic adjusting for you.  So it might or might not look good.  You just have to play around to see what you like.  To let you see the size differences in display mode here is a table with all of them side by side. The first one is the default size and the second entry uses \verb|\left| and \verb|\right| so you can compare the cases.  Note that \verb|\left| and \verb|\right| adjust to the size of the object it encloses but the rest have fixed height no matter what is in the middle.  Here is a table to show you all of the options we have covered side-by-side.\\
+\vspace{1cm}
+
+\phantomsection
+\label{tableexample}
+\begin{tabular}{|r|c c c c c c|}
+\hline
+ & &\hspace{1mm} \verb|\left| & & & &\\
+Sizes: & Normal &\quad \verb|\right|& \hspace{1mm} \verb|\big| &  \hspace{1mm} \verb|\Big| &\hspace{1mm} \verb|\bigg| &\hspace{1mm} \verb|\Bigg|\\
+\hline
+&&&&&&\\
+Examples &
+\hspace{1mm} $\displaystyle (x)(\frac{m}{n})$ &
+\hspace{1mm} $\displaystyle \left(x\right)\left(\frac{m}{n}\right)$&
+\hspace{1mm} $\displaystyle \big(x\big)\big(\frac{m}{n}\big)$ &
+\hspace{1mm} $\displaystyle \Big(x\Big)\Big(\frac{m}{n}\Big)$ &
+\hspace{1mm}$\displaystyle \bigg(x\bigg)\bigg(\frac{m}{n}\bigg)$&
+\hspace{1mm} $\displaystyle \Bigg(x\Bigg)\Bigg(\frac{m}{n}\Bigg)$\\
+&&&&&&\\
+\hline
+\end{tabular}
+
+\vspace{1cm}
+
+Now that we know both methods, lets go back and fix how equation~\eqref{eqn:BadSetBrackets} looks. It turns out that if you try to use \verb|\left| and \verb|\right| they won't change the look at all.  So typing this:
+\begin{verbatim}
+\[
+S=\left\{
+    \left\{\Sigma,b\right\}, \left\{a,[x;y;z]\right\}, \mu,Z
+  \right\}
+\]
+\end{verbatim}
+will give you this:
+\[
+S=\left\{
+    \left\{\Sigma,b\right\}, \left\{a,[x;y;z]\right\}, \mu,Z
+  \right\}
+\]
+which looks \emph{exactly} the same as \eqref{eqn:BadSetBrackets}.  That is because there are no stacked constructs (like a fraction) or very tall operators (like an integral sign).  But to improve readability I prefer to vary the bracket sizing like this:
+\begin{verbatim}
+\[
+S=\bigg\{
+    \big\{\Sigma,b \big\}, \big\{a,[x;y;z] \big\}, \mu,Z
+  \bigg\}
+\]
+\end{verbatim}
+which gives you this:
+\[
+S=\bigg\{
+    \big\{\Sigma,b \big\}, \big\{a,[x;y;z] \big\}, \mu,Z
+  \bigg\}
+\]
+Notice that I kept the innermost square brackets at normal size and increased the sizing outward. It is a matter of taste but I think this final version is easier to read.  You may not agree (or care one way or the other) and that is fine. \textit{Vive la diff\'{e}rence!}
+
+Here is one last case where \verb|\left| and \verb|\right| actually do not look nearly as good (in my opinion) as forcing the size you want (this is a modified version of an example found in the AMS-math documentation).  Consider this:\\
+
+\noindent
+\begin{verbatim}
+\[
+\left[ \sum_i a_i
+   \left\lvert \sum_j b_{ij}
+   \right\rvert^q
+\right]^{1/3}
+\]
+\end{verbatim}
+
+
+which gives you this:
+\[
+\left[ \sum_i a_i
+   \left\lvert \sum_j b_{ij}
+   \right\rvert^q
+\right]^{1/3}
+\]\\
+Forcing the sizing using \verb|\Bigg| and \verb|\bigg| looks better:\\
+
+\begin{verbatim}
+\[
+\Bigg[ \sum_i a_i
+   \bigg\lvert \sum_j b_{ij}
+   \bigg\rvert^q
+\Bigg]^{1/3}
+\]
+\end{verbatim}
+\noindent
+This is the result:
+\[
+\Bigg[ \sum_i a_i
+   \bigg\lvert \sum_j b_{ij}
+   \bigg\rvert^q
+\Bigg]^{1/3}
+\]
+I think the second version looks much better because the brackets and the absolute value aren't so tall. Also, the $q$ in the exponent is tucked under the right bracket better in the second version. 
+
+Now, I only fuss over these things when I am finishing up a document that really matters.  You shouldn't waste time worrying about minutia when you are drafting your documents.  These are the things that are easy to go back and fix after you have your ideas down and you want to really make your work look professional.  In general I try to make the document as readable as possible and there are often a variety of choices. Sometimes the differences are subtle. I will close this section with a final side-by-side comparison.  Here I have three options of parentheses side-by-side:
+\[
+(\sqrt{2}-\sqrt{x})^2 = \big(\sqrt{2}-\sqrt{x}\big)^2 =
+\left(\sqrt{2}-\sqrt{x}\right)^2.
+\]
+The first of the three is the default size and the parentheses are a little too small.  Either the second one, using \verb|\big|, or the third one, using \verb|\left| and \verb|\right|, look better to my eye.  Take your pick.\\
+
+\subsection{Fun ways to use invisible stuff with \texttt{\{\}} or \texttt{\textbackslash phantom\{\}}}
+\label{sec:PhantomUses}
+We have seen the use of \verb|\phantom{}| earlier in the horizontal spacing section but there are occasionally times when you might want to use a \verb|\phantom{}| to help you do other things as well.  Also, you can use empty curly braces \verb|{}| in math mode as well, which is more or less equivalent to using \verb|\phantom{}| without any inputs at all!  If you use \verb|\phantom{}| with no inputs you get a character with no width. But why would you ever want to do that? Well the nice thing is that you can give an invisible \verb|\phantom{}| character \emph{visible} subscripts and/or superscripts.  So you can do things like this:\\
+
+\noindent
+\verb|${}_a^b$|\qquad will give you this:\qquad  ${}_a^b$\\
+
+\noindent
+Or equivalently
+
+\noindent 
+\verb|$\phantom{}_a^b$|\qquad will give you this:\qquad  ${}_a^b$\\
+
+\noindent
+They are essentially the same. In this example we are using an invisible letter (with no width since the brackets are empty) to force a subscript and a superscript that just seem to float in space.  Now it may not seem like this would be very useful, but what if you want a subscript and superscript that  \emph{precedes} a letter or symbol?  This is  common in chemistry but also hypergeometric functions and combinatorics use preceding subscripts occasionally.  The easy way to do this is with \verb|{}| and/or \verb|\phantom{}|.  Here is an example of one common notation for ``5 choose 3,'' meaning all possible combinations of 3 things chosen from a set with 5 things:\\
+
+\noindent
+\verb|${}_5 C_3$| \qquad gives you this result:\qquad ${}_5 C_3$\\
+
+\noindent
+So the phantom character lets you create the subscript 5 which follows directly before the letter C.  Since \LaTeX\ ignores the space, the 5 and the $C$ get squished together just like you would want them to be.
+
+By-the-way, let me digress since I mentioned combinations.  You should know that the binomial coefficient notation is also available via the AMS packages.  The function is \verb|\binom{}{}|:\\
+
+\verb|$\displaystyle {}_n C_k = \binom{n}{k} = \frac{n!}{k!(n-k)!}$.|\\
+
+$\displaystyle {}_n C_k = \binom{n}{k} = \frac{n!}{k!(n-k)!}$.\\
+
+The following is an example from chemistry that you might like to recreate:
+\[
+{}^{238}_{\phantom{2}92}\mathrm{U}\quad 
+\]
+
+\noindent
+Based on the example above, you might try to do this: \\
+
+\verb|${}^{238}_{92}\mathrm{U}$|\quad but that will give you this \quad ${}^{238}_{92}\mathrm{U}$\\
+
+\noindent
+which isn't quite get the right result.  The preceding 238 looks correct but the problem is that we want the 92 to be shifted to the right by the same width as the 2.  But this is exactly what \verb|\phantom{}| does for you!  We just need to insert a \verb|\phantom{2}| in front of the 92 like this:\\
+
+\noindent
+\verb|${}^{238}_{\phantom{2}92}\mathrm{U}\quad $|\quad which gives you ${}^{238}_{\phantom{2}92}\mathrm{U}\quad$\\
+
+\noindent
+and the problem is solved.  Now there is a little invisible 2 that is helping line things up perfectly.
+
+\subsection{Inserting text inside of math}
+There are many circumstances where you want to insert regular text inside of a math environment.  There are a lot of ways to do this but in this section I am just going to give you some basic easy methods.  Inserting text inside of math is often not an issue when you are working with in-line math mode because you can just switch in and out of math mode with dollar signs. So it is easy do things like:\\ 
+
+\noindent\verb|Let $f(x)=x^2$ and $g(x)=x+2$. Then $f$ composed with $g$ is|\\\verb|$(f \circ g)(x)=(x+2)^2$.|\\
+
+\noindent Let $f(x)=x^2$ and $g(x)=x+2$. Then $f$ composed with $g$ is $(f \circ g)(x)=(x+2)^2$.\\
+
+But sometimes you want text inside of math where you can't easily leave math mode.  Often you just want one or two words, like ``and,'' ``or,'' ``such that,'' or ``therefore'' in the middle of your math.  To do this use the \verb|\text{}| function which is available via the AMS math package.\\
+
+\noindent
+\verb!$A=\{x+iy\in\mathbb{C}\,|\,x\in\mathbb{Q}\ \text{and}\ y > 0\}$!\marginnote{$\leftarrow$ \footnotesize \textsl{Note that I am using some alternate script styles and two types of forced spacing here.  Remember that you need to force horizontal spacing in math mode.}}\\
+%Note that I used ! here because I needed both | and + in my \verb function
+
+\noindent
+$A=\{x+iy\in\mathbb{C}\;|\;x\in\mathbb{Q}\ \text{and}\ y > 0\}$\\
+
+Sometimes I use text inside of math as a pedagogical aid for my students.  Here is something I would use for my statistics students who are learning to calculate $Z$-scores:\\
+\begin{verbatim}
+$\displaystyle Z = 
+\frac{\text{``sample statistic''} -\text{``sampling distribution mean''}}
+{\text{``standard error''}}
+=\frac{\widehat{p}-\mu_{\widehat{p}}}{\sigma_{\widehat{p}}}$
+\end{verbatim}
+
+\noindent
+$\displaystyle Z = \frac{\text{``sample statistic''}-\text{``sampling distribution mean''}}{\text{``standard error''}}=\frac{\widehat{p}-\mu_{\widehat{p}}}{\sigma_{\widehat{p}}}$\\
+
+Another common way you might want to enter text inside of math mode happens within the \texttt{align} environment.  You often want to interject a quick comment in the middle of some aligned equations but the problem is that if you leave the \texttt{align} environment to type the text, then you lose your alignment settings.  So then you can't align the equations that follow.  The AMS math packages have a command \verb|\intertext{}| that allows you to do this.  Here is an example of how I might use this to explain something to a College Algebra class.  Suppose I want to show the steps to solving $2(x-3)^2-3 = 15$.  Then I might do this:.
+\begin{verbatim}
+\begin{align*}
+2(x-3)^2-3 &= 15\\
+2(x-3)^2 &= 18\\
+2(x-3)^2 &= 18\\
+(x-3)^2 &= 9.\\
+\intertext{Taking square roots of both sides gives us}
+x-3 &= \pm\sqrt{9}\\
+x-3 &= \pm 3,\\
+\intertext{so}
+x &= 3\pm 3,\\
+\intertext{therefore}
+x = 0\quad&\text{and}\quad x = 6
+\end{align*}
+are the solutions.
+\end{verbatim}
+
+
+\begin{align*}
+2(x-3)^2-3 &= 15\\
+2(x-3)^2 &= 18\\
+2(x-3)^2 &= 18\\
+(x-3)^2 &= 9.\\
+\intertext{Taking square roots of both sides gives us}
+x-3 &= \pm\sqrt{9}\\
+x-3 &= \pm 3,\\
+\intertext{so}
+x &= 3\pm 3,\\
+\intertext{therefore}
+x = 0\quad&\text{and}\quad x = 6
+\end{align*}
+are the solutions.\\
+
+\noindent Note how the alignment (using the \& character) continues even after the use of \verb|\intertext{}|.  Also note how I used \verb|\text{}| to put the word ``and'' in the middle of the last line.  I also used some \verb|\quad| space and an \& to line the ``and'' up with the equals signs from above.
+
+All of the examples I have shown you so far come up quite a bit so they will be useful.  But unfortunately any other example of putting text inside of math that I ever need requires some things that are a little more advanced than I want to cover here.  Specifically they require the use of boxes:  \verb|\parbox|, \verb|\fbox|, \verb|\framebox|, \verb|\raisebox|, etc.  I used \verb|\raisebox| to make my silly Alice example on page \pageref{AliceDownTheHole}.  But that didn't have math.  I use a \verb|\parbox| to do this:\footnote{This clever use of words inside set braces came right from a book I happen to be reading today: \emph{Algebraic Curves and Riemann Surfaces} by Rick Miranda.  Good book by-the-way.}\\
+
+There is a 1-1 correspondence between
+\[
+\left\{
+\parbox{1.5in}{\centering isomorphism classes of\\
+connected coverings\\
+$F:U\to V$}
+\right\}
+\Leftrightarrow 
+\left\{
+\parbox{1.1in}{\centering conjugacy classes\\
+of subgroups\\
+$H\subseteq \pi_1(V,q)$}
+\right\}
+\]
+
+\noindent
+Using a \texttt{parbox} allowed me to put word-wrapped text inside of math braces with a mini paragraph (which is what the ``par'' means in \texttt{parbox}).  For more on boxes see:\\
+\url{http://en.wikibooks.org/wiki/LaTeX/Boxes}
+
+
+\subsection{Under-stuff and over-stuff}
+There are many times in mathematics where you want a line, hat, arrow or brace on top of your letter (or sometimes below).  Like these simple  examples:\\
+
+\noindent
+\verb|\[\vec{x}\quad \dot{f}\quad   \ddot{g}\quad \widetilde{\eta}\quad  \hat{z}\quad|\\
+\verb|\widehat{p}\quad \overleftarrow{ab}\quad  \overrightarrow{pq}|\\
+\verb|\overline{A}\quad  \underline{B}\quad  \underrightarrow{\Gamma}\quad \]|\\
+
+\noindent
+\[\vec{x}\quad
+\dot{f}\quad
+\ddot{g}\quad
+\widetilde{\eta}\quad
+\hat{z}\quad
+\widehat{p}\quad
+\overleftarrow{ab}\quad
+\overrightarrow{pq}\quad
+\bar{\omega}\quad
+\overline{AB}\quad
+\underline{B}\quad
+\underrightarrow{\Gamma}\quad
+\]
+
+\noindent
+Some of these will extend to be as wide as the letters in the argument of the function but some are not extensible.  For instance \verb|\hat{}| will only cover one character but \verb|\widehat{}| can cover as many as you want (well... there are limits to how wide you can go...).  In fact these two commands look different even over one letter. So you might like the look of one over the other in different situations.  Here are some examples comparing the two:\\
+
+\noindent
+\verb|$\hat{p}\quad \widehat{p}\quad \hat{xyz}\quad \widehat{xyz}$|\\
+
+\noindent$\hat{p}\quad \widehat{p}\quad \hat{xyz}\quad \widehat{xyz}$\\
+
+\noindent
+Here are some other extensible over/under braces:
+
+\noindent
+\verb|\[\widetilde{ABCD}\quad\overleftrightarrow{}{wxyz}|\\ 
+\verb|\quad\overline{\omega \zeta \theta}\quad\overbrace{MNOP}|\\
+\verb|\quad\underbrace{QRSTUV}\quad\underbracket{AB\Gamma\Delta}\]|
+
+\[
+\widetilde{ABCD}\quad
+\overleftrightarrow{wxyz}\quad
+\overline{\omega \zeta \theta}\quad
+\overbrace{MNOP}\quad
+\underbrace{QRSTUV}\quad
+\overrightarrow{x_0x_1}\quad
+\underbracket{AB\Gamma\Delta}
+\]
+This is a case where the extended under-stuff and over-stuff do not look good in my \LaTeX\ viewer.  It looks much better in Adobe Reader, but it still isn't absolutely perfect even there (but it isn't too bad).  There are packages that improve this if you \emph{really} need it to look publishing perfect or it just bothers you.\footnote{The Math Time Pro 2 package, created by Michael Spivak, has really elegant looking braces (and lots of other features).  Unfortunately the full package is not free.  However the ``Lite'' version is free and has the nice braces.  Both the free and pay versions are available here:  \url{http://www.pctex.com/mtpro2.html}} 
+
+Having these variable length over and under things makes it easy to do some useful things.  For example, an extensible bar is useful for complex variables (this also gives us a chance to use big parentheses too):
+\begin{verbatim}
+\[
+\overline{(e^{-iz}+w)^2} =
+\Big(\overline{e^{-iz}+w}\Big)^2 =
+\Big(\overline{e^{-iz}}+\overline{w}\Big)^2 =
+\Big(e^{\overline{-iz}}+\overline{w}\Big)^2 =
+\Big(e^{i\overline{z}}+\overline{w}\Big)^2
+\]
+\end{verbatim}
+
+\[
+\overline{(e^{-iz}+w)^2} =
+\Big(\overline{e^{-iz}+w}\Big)^2 =
+\Big(\overline{e^{-iz}}+\overline{w}\Big)^2 =
+\Big(e^{\overline{-iz}}+\overline{w}\Big)^2 =
+\Big(e^{i\overline{z}}+\overline{w}\Big)^2
+\]
+
+
+Sometimes, for more advanced documents, you want more complicated stacked constructs.  Fortunately there are many ways to do this.  But I will only show a few here.  One way is to use the subscript command after the \verb|\underbrace{}| command or use the superscript command after the \verb|\overbrace{}|.  These have the effect of putting the text above or below the brace. In this example I use a brace and a bracket, and I also use the \verb|\text{}| command we learned in the last section, plus I use some horizontal spacing.
+\begin{verbatim}
+\[
+\overbrace{f(x)=2x^3+3x^2+2x-2}^{\text{polynomial function}}
+\hspace{1cm}
+\underbracket{\Phi(x)= 2xe^x+13\cos(2x+35)+x^{\pi}}_{\text{transcendental function}}
+\]
+\end{verbatim}
+\[
+\overbrace{f(x)=2x^3+3x^2+2x-2}^{\text{polynomial function}}
+\hspace{1cm}
+\underbracket{\Phi(x)= 2xe^x+13\cos(2x+35)+x^{\pi}}_{\text{transcendental function}}
+\]
+When \LaTeX\ tries to fit everything in, it can do some strange horizontal spacing.  So here is another example where I will show the unedited and the edited versions next to each other. I improved the output with some horizontal spacing adjustment.  Fortunately this sort of micro-editing doesn't come up too often.  But when you want to do something special, you might need the skills to make it look good.
+\begin{verbatim}
+\[
+f(z)=f(x+iy)=
+\underbrace{u(x,y)}_{\text{Real part}} +
+i\underbrace{v(x,y)}_{\text{Imaginary part}}
+\]
+
+\[
+f(z)=f(x+iy)=
+\underbrace{u(x,y)}_{\text{Real part}} +\;
+i\hspace{-7mm}\underbrace{v(x,y)}_{\hspace{5mm}\text{Imaginary part}}
+\]
+\end{verbatim}
+
+\bigskip
+
+\[
+f(z)=f(x+iy)=
+\underbrace{u(x,y)}_{\text{Real part}} +
+i\underbrace{v(x,y)}_{\text{Imaginary part}}
+\]
+
+\[
+f(z)=f(x+iy)=
+\underbrace{u(x,y)}_{\text{Real part}} +
+\;i\hspace{-7mm}\underbrace{v(x,y)}_{\hspace{5mm}\text{Imaginary part}}
+\]
+%\marginnote{\footnotesize \textsl{Again, this would look better with the Math Time Pro 2 ``Lite'' package.  But I don't want to add it to this document for various reasons...}}[-5mm]
+
+Another useful pair of commands is the \verb|\underset| and \verb|\overset| functions.  These both take two inputs.  You need,  \verb|\underset{under-stuff}{regular-stuff}| and the analogous inputs for \verb|\overset|.  There are times when you might want something under or over another thing that isn't standard.  This happens all the time in advanced mathematics when you are making things up that have no standard notation.  Maybe you want a math squiggle \emph{below} your variable.  You can do this with the command \verb|\sim| which usually is used for things like \verb|$p\sim q$|, which gives you $p\sim q$.  But this is how to hack an under-squiggle:\\
+
+\verb|\underset{\sim}{x}|\qquad to get \qquad $\underset{\sim}{x}$\\
+
+\noindent
+So the $x$ is in-line in the normal place, and the twiddle is below the $x$.  By-the-way, I don't love the amount of space between the $x$ and the squiggle underneath so this is a perfect place to use a \verb|\phantom{}| character! If we use \verb|\widetilde| over a phantom character but put the whole thing in the \texttt{underset} \emph{below} the $x$ then it will push the squiggle up! (O.k. it's a hack... I know.  But it is good to learn some hacks.)  Now, another thing about \verb|\underset| and \verb|\overset| is that the script inside of the under/over set is the size of an exponent.  So if you want it to be normal in-line size, then you have to force it with \verb|\displaystyle|. Compare the following versions of putting a twiddle underneath the $x$:\\
+
+\begin{verbatim}
+$\underset{\sim}{x} \qquad 
+\underset{\widetilde{x}}{x} \qquad 
+\underset{\widetilde{\phantom{x}}}{x} \qquad
+\underset{\displaystyle \widetilde{x}}{x} \qquad
+\underset{\displaystyle \widetilde{\phantom{x}}}{x} \qquad
+\widetilde{x}$
+\end{verbatim}
+ 
+$\underset{\sim}{x} \qquad 
+\underset{\widetilde{x}}{x} \qquad 
+\underset{\widetilde{\phantom{x}}}{x} \qquad
+\underset{\displaystyle \widetilde{x}}{x} \qquad
+\underset{\displaystyle \widetilde{\phantom{x}}}{x} \qquad
+\widetilde{x}$\\
+
+\noindent The first example is the one with \verb|\sim| like before.  I threw in the second example, with the visible $x$, just so you how the $x$ in the underset was functioning.  But then I made it vanish in the third one.  But it is too small, so the fourth example shows the size fix, and the fifth one is the result I was looking for.  Note that the fifth version matches the sixth example which is the twiddle that you get \emph{over} the $x$ in the normal way.  You would would want the under-twiddle to match the over-twiddle.
+
+Just recently I was documenting a graph theory algorithm that I was coding and it had two parts which found ascending and descending edges connecting vertices.  Anyway, to make it clear which version of the algorithm I was using, I differentiated the results of the two methods with:\\
+
+\verb|$v_i\overset{+}{\rightarrow}v_j$|\quad and \quad \verb|$v_i\overset{-}{\rightarrow}v_j$|\\
+
+ $v_i\overset{+}{\rightarrow}v_j$\quad and \quad $v_i\overset{-}{\rightarrow}v_j$\\ 
+
+\noindent
+This made my documentation much clearer than relying on the reader to know in context which version of the algorithm I was using.  Good notation is often the key to clear technical writing.  So the more you use \LaTeX\ the more creative ways you will find to make your documents clear and expressive.
+
+Here is a slightly more involved example which I might create for an algebra student to remind them of the steps required for completing the square of a quadratic expression.  Again, this is a chance for us to apply a variety of things we have learned.  One thing I do here is use \verb|\underset| inside of another \verb|\underset| in order to get text below and arrow which is below one of the coefficients. Also I use some \verb|\!| for negative space to squeeze things together a bit (this is not necessary).  And I also needed variable sized parentheses:
+\begin{verbatim}
+\[
+x^2+\!\underset{\underset{b=3}{\uparrow}}{3}\!\!x+2 =
+x^2+3x+\overbrace{\underbrace{\left(\frac{3}{2}\right)^2}_{(b/2)^2}\!\!
+-\left(\frac{3}{2}\right)^2}
+^{\text{\footnotesize add and subtract}}\!\!+\, 2 =
+\overbrace{x^2+3x+\left(\frac{3}{2}\right)^2}
+^{\text{\footnotesize Perfect square}}\!- \frac{1}{4}=
+\left(x+\frac{3}{2}\right)^2\!-\frac{1}{4}
+\]
+\end{verbatim}
+\[
+x^2+\!\underset{\underset{b=3}{\uparrow}}{3}\!\!x+2 =
+x^2+3x+\overbrace{\underbrace{\left(\frac{3}{2}\right)^2}_{(b/2)^2}\!\!
+-\left(\frac{3}{2}\right)^2}
+^{\text{\footnotesize add and subtract}}\!\!+\, 2 =
+\overbrace{x^2+3x+\left(\frac{3}{2}\right)^2}
+^{\text{\footnotesize Perfect square}}\!- \frac{1}{4}=
+\left(x+\frac{3}{2}\right)^2\!-\frac{1}{4}
+\]
+\subsection{Matrices}
+Now that you know what an environment is, you know what display math is, you are aware of the AMS packages, \emph{and} you have seen how the ampersand character works, you have all the building blocks for matrices!  And it even helps that you know how to adjust the spacing if needed (since sometimes you need it with matrices).  There are a variety of ways you can do matrices but the best way is to use any one of the following environments:  \verb|matrix|, \verb|bmatrix|, \verb|pmatrix|, \verb|Bmatrix|, \verb|vmatrix|, or \verb|Vmatrix|.  Note that I said these are environments, so you will need to do \verb|\begin{pmatrix}| and end it with \verb|\end{pmatrix}|.  The entries of the matrix go in between.  Unlike the \texttt{align} environment or the \texttt{equation} environment which are stand-alone math mode environments, you have to put a matrix inside \$ \$ or inside a display math environment like \verb|\[ \]| or \verb|\begin{equation} *** \end{equation}|.  That is why my examples begin and end with commands that invoke the math mode. Here is the syntax for a matrix with brackets:
+\begin{verbatim}
+\[
+\begin{bmatrix}
+a & b\\
+c & d
+\end{bmatrix}
+\]
+\end{verbatim}
+
+\[
+\begin{bmatrix}
+a & b\\
+c & d
+\end{bmatrix}
+\]\\[7pt]
+Note that the ampersand \& is used to split the columns and line things up.  Also you need a newline, \verb|\\|, command to move to a new row.  So if you want more columns, use more \&, if you want more rows, use more \verb|\\|. The brackets are created by the \verb|bmatrix| environment itself.  
+
+The following example shows a rotation matrix which rotates a vector around the $y$-axis.  The equation is show with parentheses matrices.  It requires a matrix environment for each matrix:
+
+\newpage
+
+\begin{verbatim}
+\[
+\begin{pmatrix}
+\cos(\theta) & 0 & -\sin(\theta)\\
+0 & 1 & 0\\
+\sin(\theta) & 0 & \cos(\theta)
+\end{pmatrix}
+\begin{pmatrix}
+u_1\\
+u_2\\
+u_3
+\end{pmatrix} 
+=
+\begin{pmatrix}
+v_1\\
+v_2\\
+v_3
+\end{pmatrix}
+\]
+\end{verbatim}
+
+\[
+\begin{pmatrix}
+\cos(\theta) & 0 & -\sin(\theta)\\
+0 & 1 & 0\\
+\sin(\theta) & 0 & \cos(\theta)
+\end{pmatrix}
+\begin{pmatrix}
+u_1\\
+u_2\\
+u_3
+\end{pmatrix} 
+=
+\begin{pmatrix}
+v_1\\
+v_2\\
+v_3
+\end{pmatrix}
+\]\\[4pt]
+Notice that I had two ampersands in each row of the first matrix because there were 3 columns. Also note that you do not need the ampersands to line up.  \LaTeX\ will do it for you. Writing code for matrices is a little different that anything else because you have to think vertically even though it will be printed horizontally.  To help make things clearer I put the equals sign on it's own line.  Here are the other versions of matrices that are available.  The only difference between the different versions is what type of grouping symbol they put around the entries (or nothing at all in the first case).  The syntax for filling in the entires is exactly the same.
+
+\begin{center}
+\begin{tabular}{c c c}
+\verb+\begin{matrix}+&\qquad &
+$\displaystyle
+\begin{matrix}
+a & b\\
+c & d
+\end{matrix}$\vspace{5pt}\\
+\verb+\begin{Bmatrix}+&\qquad &
+$\displaystyle
+\begin{Bmatrix}
+a & b\\
+c & d
+\end{Bmatrix}$\vspace{5pt}\\
+\verb+\begin{vmatrix}+&\qquad &
+$\displaystyle
+\begin{vmatrix}
+a & b\\
+c & d
+\end{vmatrix}$\vspace{5pt}\\
+\verb+\begin{Vmatrix}+&\qquad &
+$\displaystyle
+\begin{Vmatrix}
+a & b\\
+c & d
+\end{Vmatrix}$\vspace{5pt}\\
+\end{tabular}
+\end{center}
+
+You can have empty spots in a matrix and you can also use \verb|\cdots|, \verb|\vdots|, and \verb|\ddots|,\\[-3pt] which will give you $\cdots$, $\vdots$, and $\ddots$ inside of your matrix.  The next example is a general linear transformation $T:\mathbb{R}^n \rightarrow \mathbb{R}^m$. It is shown here as an $m\times n$ matrix multiplied by an $n$ dimensional vector.  The result is $m$ dimensional.  Admittedly, this is an involved example, but it comes up if you do any matrix algebra.  And I wanted to show you that you can put more complicated things inside of a matrix like a summation.  Note the way I space things in the code to line up the ampersands.  This is only for readability and is not necessary.  I also use some vertical spacing, blank spaces, and lots of dots.
+
+\newpage
+
+\begin{verbatim}
+\[
+\begin{pmatrix}
+a_{11}& a_{12} & \cdots & a_{1n}\\
+a_{21}& a_{22} &        & \vdots \\
+\vdots&        & \ddots & \vdots\\
+a_{m1}& \cdots & \cdots & a_{mn}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+x_1\vspace{1mm}\\
+x_2\\
+\vdots
+\vspace{1mm}\\
+x_n
+\end{pmatrix}
+=
+\begin{pmatrix}
+\sum_{i=1}^{n}a_{1i}\, x_i\vspace{2mm}\\
+\sum_{i=1}^{n}a_{2i}\, x_i\\
+\vdots\\
+\sum_{i=1}^{n}a_{mi}\, x_i
+\end{pmatrix}
+\]
+\end{verbatim}
+\[
+\begin{pmatrix}
+a_{11}& a_{12} & \cdots & a_{1n}\\
+a_{21}& a_{22} &        & \vdots \\
+\vdots&        & \ddots & \vdots\\
+a_{m1}& \cdots & \cdots & a_{mn}
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+x_1\vspace{1mm}\\
+x_2\\
+\vdots
+\vspace{1mm}\\
+x_n
+\end{pmatrix}
+=
+\begin{pmatrix}
+\sum_{i=1}^{n}a_{1i}\, x_i\vspace{2mm}\\
+\sum_{i=1}^{n}a_{2i}\, x_i\\
+\vdots\\
+\sum_{i=1}^{n}a_{mi}\, x_i
+\end{pmatrix}
+\]\\
+
+Sometimes there are just too many entries to line things up so you just have to be careful with your code.  The default limit to the number of columns is 10.\footnote{You can increase the default number of matrix columns allowed.  See:\\ \url{http://www.latex-community.org/forum/viewtopic.php?f=46&t=11214}}  A matrix in Jordan canonical form has the following form where any empty space is a zero:
+\begin{verbatim}
+\[
+\begin{bmatrix}
+\lambda_1 &&&&&&&&&\\
+& \lambda_2  & 1 &&&&&&&\\
+&& \lambda_2 &&&&&&&\\
+&&& \ddots &&&&&&\\
+&&&& \lambda_i & 1 &&&&\\
+&&&&& \lambda_i  & 1 &&&\\
+&&&&&& \lambda_i &&&\\
+&&&&&&& \ddots &&\\
+&&&&&&&& \lambda_{n-1} &\\
+&&&&&&&&& \lambda_n \\
+\end{bmatrix}
+\]
+\end{verbatim}
+\[
+\begin{bmatrix}
+\lambda_1 &&&&&&&&&\\
+& \lambda_2  & 1 &&&&&&&\\
+&& \lambda_2 &&&&&&&\\
+&&& \ddots &&&&&&\\
+&&&& \lambda_i & 1 &&&&\\
+&&&&& \lambda_i  & 1 &&&\\
+&&&&&& \lambda_i &&&\\
+&&&&&&& \ddots &&\\
+&&&&&&&& \lambda_{n-1} &\\
+&&&&&&&&& \lambda_n \\
+\end{bmatrix}
+\]\\
+
+\noindent||||||||||||||
+
+What if you are doing some more advanced matrix theory with block matrices, in other words, you need matrices inside of matrices?  No problem!  Here is a $5\times6$ matrix represented as a $2\times2$ in block notation (by-the-way, $I_2$ is shorthand for a $2\times2$ identity matrix and $\mathit{0}_{\,3\times 4}$ is shorthand for a $3\times 4$ matrix filled with zeros):
+
+\[
+\begin{bmatrix}
+A_{3\times2}& B_{3\times4}\\
+C_{2\times2} & D_{2\times4}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\begin{pmatrix}
+a & b\\
+c & d\\
+e & f
+\end{pmatrix}
+&
+\mathit{0}_{\,3\times 4}
+\\
+I_2
+&
+\begin{pmatrix}
+\alpha & \beta & \gamma & \delta\\
+\epsilon & \zeta & \eta & \theta
+\end{pmatrix}
+\end{bmatrix}
+\]
+
+\noindent Here is the code for this example:
+\begin{verbatim}
+\[
+\begin{bmatrix}
+A_{3\times2}& B_{3\times4}\\
+C_{2\times2} & D_{2\times4}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\begin{pmatrix}
+a & b\\
+c & d\\
+e & f
+\end{pmatrix}
+&
+\mathit{0}_{\,3\times 4}
+\\
+I_2
+&
+\begin{pmatrix}
+\alpha & \beta & \gamma & \delta\\
+\epsilon & \zeta & \eta & \theta
+\end{pmatrix}
+\end{bmatrix}
+\]
+\end{verbatim}
+If you really scrutinize this code you will see that the \texttt{bmatrix} on the right hand side of the equals sign is a $2\times 2$ matrix (there is only one \&, meaning two columns, and only one \verb|\\| meaning two rows).  It just so happens that the upper left-hand entry is a \texttt{pmatrix}, and the lower right hand entry is also a \texttt{pmatrix}.\\
+
+\noindent|||||||||||||||||||
+
+The final example in this section utilizes many things we have learned in an example that might look familiar to you (assuming you have taken a basic multivariable calculus course).  This is a formal mnemonic to remember how to compute the cross product of two vectors $\overrightarrow{\mathbf{u}},\overrightarrow{\mathbf{v}}\in \mathbb{R}^3$.  This example uses the align environment, two types of matrices, bold math  letters, two types of over arrows (I put bigger ones on the variables and smaller arrows on the unit basis vectors), and also some spacing just to make things look nice.  We have really covered a lot of material!  
+
+\begin{align*}
+\overrightarrow{\mathbf{u}} \times \overrightarrow{\mathbf{v}} 
+&= [u_1\;\; u_2\;\; u_3]\times [v_1\;\; v_2\;\; v_3]\\[7pt]
+&= \det \begin{pmatrix}
+\vec{\mathbf{i}} & \vec{\mathbf{j}} & \vec{\mathbf{k}}\\
+u_1 & u_2 & u_3\\
+v_1 & v_2 & v_3
+\end{pmatrix}\\[7pt]
+&=
+\begin{vmatrix}
+u_2 & u_3\\
+v_2 & v_3
+\end{vmatrix}\vec{\mathbf{i}}
+-
+\begin{vmatrix}
+u_1 &  u_3\\
+v_1 &  v_3
+\end{vmatrix}\vec{\mathbf{j}}
++
+\begin{vmatrix}
+u_1 & u_2 \\
+v_1 & v_2 
+\end{vmatrix}\vec{\mathbf{k}}\\[4pt]
+&=
+(u_2 v_3-v_2 u_3)\,\vec{\mathbf{i}}-
+(u_1 v_3-v_1 u_3)\,\vec{\mathbf{j}}+
+(u_1 v_2-v_1 u_2)\,\vec{\mathbf{k}}
+\end{align*}
+Here is the code for the previous example:
+\begin{verbatim}
+\begin{align*}
+\overrightarrow{\mathbf{u}} \times \overrightarrow{\mathbf{v}} 
+&= [u_1\;\; u_2\;\; u_3]\times [v_1\;\; v_2\;\; v_3]\\[7pt]
+&= \det \begin{pmatrix}
+\vec{\mathbf{i}} & \vec{\mathbf{j}} & \vec{\mathbf{k}}\\
+u_1 & u_2 & u_3\\
+v_1 & v_2 & v_3
+\end{pmatrix}\\[7pt]
+&=
+\begin{vmatrix}
+u_2 & u_3\\
+v_2 & v_3
+\end{vmatrix}\vec{\mathbf{i}}
+-
+\begin{vmatrix}
+u_1 &  u_3\\
+v_1 &  v_3
+\end{vmatrix}\vec{\mathbf{j}}
++
+\begin{vmatrix}
+u_1 & u_2 \\
+v_1 & v_2 
+\end{vmatrix}\vec{\mathbf{k}}\\[4pt]
+&=
+(u_2 v_3-v_2 u_3)\,\vec{\mathbf{i}}-
+(u_1 v_3-v_1 u_3)\,\vec{\mathbf{j}}+
+(u_1 v_2-v_1 u_2)\,\vec{\mathbf{k}}
+\end{align*}
+\end{verbatim}
+\section{Labeling and referencing things}
+
+One of the really great things that \LaTeX\ can do for you is help you reference things like sections, equations, theorems, definitions, figures, etc. etc.  You know,... you might want to type something like, ``Figure 3 below is a photograph of some dark matter...'' Or maybe you want to reference a page number like, ``Later, on page 56, we will prove that $\mathrm{P}=\mathrm{NP}$...'' Or maybe you want to reference an equation that you had earlier in your paper like, ``If we substitute 42 for $x$ in equation (7) on page 17, we will clearly prove that the Riemann Hypothesis is true.''  Stuff like that comes up all the time.  Well, the numbers that I just typed in those examples were hand typed.  I wasn't using dynamic referencing in the proper way.  You do not have to create any of the numbering manually.  \LaTeX\ will do that for you just like it numbers equations for you.  I will not cover how to reference a figure or a theorem here.  I will just cover how to reference a section and an equation here.\footnote{I will cover how to add figures in another document and I will mention how to label them and reference them in that document.  It is similar to labeling equations.}  All other referencing you might do is similar.
+
+In order to reference something, you first have to label it.  The way you label something in your code is by adding this:  \verb|\label{labelname}|.  The ``\texttt{labelname}'' can be any name that you want to give it (you can't use special characters).  You just have to put the \verb|\label| right after whatever you are labeling.  Then later you can reference this label with \verb|\ref{labelname}|, \verb|\eqref{labelname}| or \verb|\pageref{labelname}|.  But first, here is an example of how you label a section, just put it right after the section command like this:
+
+\begin{verbatim}
+\subsection{How to label and reference a section}
+\label{SectionOnLabelingSections}
+This section of the paper shows you how to add a label to a section so that 
+you can reference it.  
+\end{verbatim}
+
+This is what you will see in the document output:
+
+\subsection{How to label and reference a section}
+\label{SectionOnLabelingSections}
+This section of the paper shows you how to add a label to a section so that you can reference it.\\
+
+\noindent Note that you can't see the label in the final document.  The label is just a marker in the code. So if you want to reference this section somewhere in the paper you just have to reference this label that we just created.  To do the reference you just have do the following (I will explain my use of the \verb|~| character in a parenthetical aside below the example... I have never explained what it does up to now):
+
+\begin{verbatim}
+You are currently reading section~\ref{SectionOnLabelingSections}. 
+\end{verbatim}
+
+\noindent \LaTeX\ will take this code and convert the \verb|\ref| command into the number of the object that is referenced inside the braces.  So you will see this as a result: \\
+
+\noindent
+You are currently reading section~\ref{SectionOnLabelingSections}.\\
+
+\noindent
+(Let me make a parenthetical side comment regarding the tilde character. The \verb|~| character creates a non-breaking space. You do not \emph{have to} have the \verb|~| here in this reference; you could just do this:\\
+
+\noindent \verb|You are currently reading section \ref{SectionOnLabelingSections}.| \\
+
+\noindent But I recommend adding the tilde.  When you put a \verb|~| between normal text characters in your code, \LaTeX\ will create a space where the \verb|~| is (just like it normally would if you put a space in the code with space bar), but \LaTeX\ \textit{will not} allow a line break where you have a \verb|~|.  You wouldn't want a line break to split up the word ``section'' from the number, like this:\quad section  \ref{SectionOnLabelingSections}.  That looks strange. One would prefer the \ref{SectionOnLabelingSections} to come right after the word ``section.'' The \verb|~| character ``glues'' them together to make sure the awkward line break won't happen between them. If a word wrap is needed, the whole block will be sent to the new line.)
+
+Now, with basic \LaTeX, your section reference won't be colored blue like it is in the above example and it won't be a live link either.  You might remember that in section~\ref{sec:packages}\marginnote{\footnotesize \textsl{$\leftarrow$\,Note how I referenced an earlier section here. Very useful!}} above, I mentioned that I am using the \texttt{hyperref} package in this document.  The \texttt{hyperref} package makes your references live links and I chose to have them colored blue to make it obvious that they were links (see the preamble for more details).  So if you make labels without using \verb|hyperref|, then the numbers will be black.
+
+Instead of referencing the section number, you can alternatively reference the page that the section label is on by doing this:
+\begin{verbatim}
+Section~\ref{SectionOnLabelingSections}, which can be found on 
+page~\pageref{SectionOnLabelingSections}, covers section labeling.
+\end{verbatim}
+
+\noindent
+Section~\ref{SectionOnLabelingSections}, which can be found on page~\pageref{SectionOnLabelingSections}, covers section labeling.\\
+
+Notice that when you use \verb|\ref| you get the number, but when you use \verb|\pageref| you get the page that it is on instead.
+
+\subsection{Referencing Equations}
+Labeling an equation is similar but you can only attach a label to an equation that is tagged with a number.  So you need to be labeling equations that are inside of some numbered equation environment. Here is an example where I create an equation label and I reference it in three different ways (the result directly follows the code):
+\begin{verbatim}
+\begin{equation}
+f(x)=\sum_{i=0}^n a_i x^i \label{poly}
+\end{equation}
+Equation~\ref{poly} is a polynomial function.  It can be found on
+page~\pageref{poly} (obviously since it is on this page!). I think
+equation~\eqref{poly} looks better because \verb|\eqref| adds
+parenthesis around the number.
+\end{verbatim}
+
+\begin{equation}
+f(x)=\sum_{i=0}^n a_i x^i \label{poly}
+\end{equation}
+Equation~\ref{poly} is a polynomial function.  It can be found on
+page~\pageref{poly} (obviously since it is on this page!). I think
+equation~\eqref{poly} looks better because \verb|\eqref| adds
+parenthesis around the number.\\
+
+\noindent So using \verb|\eqref| creates parentheses which matches the automatic numbering format, but using \verb|\ref| just has the number. Also note that we needed to use the \verb|equation| environment here, and not simply \verb|\[ \]|, because we need the equation to be numbered in order to label it.\\
+
+You can also label multiple lines within the \texttt{align} environment.  Here is an example where I label each line.  Note that I put the label right before the newline command, except for the last line where you don't need the newline command:
+
+\begin{verbatim}
+\begin{align}
+2x+3 &= 0\label{line}\\
+x^2+y^2+x+y-1 &= 0\label{circ}\\
+x^2-y^2-4x+2y+4 &= 0\label{hyperb}
+\end{align}
+Equation~\eqref{line} is a line, \eqref{circ} is a circle, and
+\eqref{hyperb} is a hyperbola.
+\end{verbatim}
+
+\begin{align}
+2x+3&=0\label{line}\\
+x^2+y^2+x+y-1&=0\label{circ}\\
+x^2-y^2-4x+2y+4&=0\label{hyperb}
+\end{align}
+Equation~\eqref{line} is a line, \eqref{circ} is a circle, and \eqref{hyperb} is a hyperbola.\\
+
+\noindent Remember that the labels do not create the numbers in parentheses on the right; the \texttt{align} environment creates the numbering on each line.  The labels just allow you to reference those numbers.
+
+Now, what if you have four lines of equations in the \texttt{align} environment but you only want to label one of the four lines?  Well, you need to add the command \verb|\notag| to any line you \emph{do not} want to number, and you label the line you \emph{do} want numbered.  Like this:
+\begin{verbatim}
+\begin{align}
+e^z &= -2 \notag \\
+(y-3)^2+5 &= 0 \notag\\
+x^3-14x^2+2x-3 &= 0 \label{cubic}\\
+\cos(\theta) &= 2 \notag
+\end{align}
+Equation~\eqref{cubic} is the only of the four equations that has a solution 
+in $\mathbb{R}$.  The rest have no real solutions.
+\end{verbatim}
+\begin{align}
+e^z &= -2 \notag \\
+(y-3)^2+5 &= 0 \notag\\
+x^3-14x^2+2x-3 &= 0 \label{cubic}\\
+\cos(\theta) &= 2 \notag
+\end{align}
+Equation~\eqref{cubic} is the only of the four equations that has a solution in $\mathbb{R}$.  The rest have no real solutions.
+
+You can also create a custom tag for an equation if you don't want it numbered.  To do this you use the \verb|\tag{label}| or \verb|\tag*{label}|.  The starred version does not have parenthesis, the non-starred version has them.  Not that ``\texttt{label}'' can be whatever you want but it is important to note that when you are inside the brackets for the \verb|\tag| command, you are in text mode.  So if you want your ``label'' to be a math symbol, then you have to use dollar signs inside the brackets.  Here are some examples:
+\begin{verbatim}
+\[
+f(x)=x^2\label{func1}\tag{A}
+\]
+\[
+g(x)=x+3\label{func2}\tag*{B}
+\]
+\[
+h(x)=(x+3)^2\label{func3}\tag{$\star$}
+\]
+\[
+e^{i\pi}=-1\label{love}\tag*{$\heartsuit$}
+\]
+If you plug equation~\ref{func2} into equation~\eqref{func1}, then you get
+ equation~\eqref{func3}. I love equation~\ref{love}.
+\end{verbatim}
+\[
+f(x) = x^2 \label{func1}\tag{A}
+\]
+\[
+g(x) = x+3 \label{func2}\tag*{B}
+\]
+\[
+h(x) = (x+3)^2 \label{func3}\tag{$\star$}
+\]
+\[
+e^{i\pi} = -1 \label{love}\tag*{$\heartsuit$}
+\]
+If you compose function~\ref{func2} with function~\eqref{func1}, then you get equation~\eqref{func3}. I love equation~\ref{love}.\\
+
+\noindent Notice the difference between the starred version and the regular version of \verb|\tag|.  Also note that the first two examples had regular text as a tag (just the letters A and B) but the third and the fourth example used the math-mode symbols \verb|\star| and \verb|\heartsuit| as the tag.  So I needed to enter math mode inside the tag with dollar signs.  Even though the \verb|\tag{}| is inside of math mode, when you are inside of the \verb|{}| of \verb|\tag|, you are in text mode.
+
+\subsection{Labels in large documents: the good and the bad}
+When you start to write longer documents, using labels and automatic numbering will be extremely helpful.  It would be a chore to number everything manually because there would be a lot of numbers to keep track of!  But the really awesome thing about using labels is that you can add new labels wherever you want at any time, and all of the numbers and labels will adjust automatically.  Similarly, if you use a \verb|\pageref| somewhere and then later you add new sections to your paper, every time you recompile the document, it will change the page number accordingly.  So once you set the label and the reference, you never have to worry about it again.  You can add, subtract, cut and paste all you want.  
+
+So labels are great, but there are a few potential issues to keep in mind.  First, after you create your labels, you may need to compile your document \emph{twice} in order for the labels and references to work correctly.\footnote{I use the \LaTeX\ editor called \TeX studio and I don't have to compile two times for the labels to be correct.  But if you use a more basic \TeX\; editor you might have to.}  You will know when there is an error with a label.  When you compile your document you might expect to see this in your document: ``equation \eqref{eqn:cases}'' but instead, your final document has: ``equation ??''  Whenever you see a double question mark, that means \LaTeX\ got confused and didn't know what to do with a label reference.  You should always try compiling the document a second or third time and see if that fixes the problem  But if it doesn't, it might be because you have a typo in your code like this:
+\begin{verbatim}
+\begin{equation}
+f(x)=k \label{mistake}
+\end{equation}
+Equation \eqref{mitsake} is a constant function.
+\end{verbatim}
+
+\begin{equation}
+f(x)=k \label{mistake}
+\end{equation}
+Equation \eqref{mitsake} is a constant function.\\
+
+\noindent Do you see the error? You won't necessarily get an error when you compile the document if you have a typo in the label like this, but you will see ?? where there should be a number.
+
+The other issue with labels that can come up is that it can be hard to keep track of them when you have dozens of labels.  For instance, at the moment, as I am typing this line I currently have 35 labels in this document!  The way that I keep track of these is by naming the labels with a special prefix that reminds me of what the label means.  Now I have not been using these prefixes in the examples in this section, just so you know.  But here are examples of how I would label sections, equations, figures, theorems, lemmas, and corollaries:
+\begin{verbatim}
+\label{sec:SectionName}
+\label{eqn:EquationName}
+\label{fig:FigureName}
+\label{thm:TheoremName}
+\label{lem:LemmaName}
+\label{cor:CorollaryName}
+\end{verbatim}
+You get the idea. The nice thing about this is that when you use a more sophisticated \LaTeX\ editor like \TeX studio, it will keep track of your labels for you and you can select your labels from a pull down menu.  So the naming scheme with the prefixes will keep the various types of labels bunched together in alphabetical order.\footnote{You can get \TeX studio for free here: \url{http://texstudio.sourceforge.net/}}
+
+\section{Future additions to this document}
+\begin{itemize}
+\item script sizes inside of math-mode  I explained displaystyle but there is also textstyle, scriptstyle and scriptscriptstyle.
+\end{itemize}
+\section{Stuff I will teach in separate documents outside of this one}
+\begin{itemize}
+\item How to make theorems, definitions etc.
+\item How to adjust the theorem styles
+\item How to add graphics (pictures, diagrams what have you)
+\item Bibliography stuff with BibTeX
+\item How to use Beamer which is like PowerPoint but LaTeX style.
+\item How to make your own basic commands and macros.
+\item Any requests? Email me and let me know.
+\end{itemize}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
