@@ -8,4 +8,12 @@ dpgoulette "at" gmail "dot com"
 Each directory/folder in this repository holds a different mini-book.  Each one contains a .pdf file and the .tex file that generated that .pdf.  (If you are completely new to LaTeX, .tex files are the files that you actually edit.  Then LaTeX turns this .tex file and generates a .pdf.)  I want you to have the source file and the result so you can learn from them side-by-side.  If you see something I did in .pdf and you want to find out how I did it, then just check out the associated .tex file.
 
 ## What to read first? second? etc.
-If you are completely new to LaTeX then begin by reading intro.pdf
+
+### If you are completely new to LaTeX:
+Begin by reading IntroAndResources.pdf. (It is in the IntroAndResources folder of course.  And don't worry about the .tex file in that directory for now. Just read the .pdf.)  It will briefly explain what LaTeX is and give you some pointers to where you can get LaTeX and find information on how to install it etc.  If want a longer and better intro read:
+http://en.wikibooks.org/wiki/LaTeX/Introduction
+If you are installing on Windows or Mac, then my intro will probably be sufficient and point you in the right direction.  But if you are a Linux user then you will likely need more help than I give in the IntroAndResources document (but you should read it anyway).  For more detailed installation instructions for any platform, see:
+http://en.wikibooks.org/wiki/LaTeX/Installation
+Additional Linux installation info:
+https://www.tug.org/texlive/
+https://www.tug.org/texlive/quickinstall.html
